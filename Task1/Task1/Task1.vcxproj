@@ -141,10 +141,12 @@
   <ItemGroup>
     <ClCompile Include="Task1.cpp" />
     <ClCompile Include="Brightness_Modifier.cpp" />
+    <ClCompile Include="Negative_Modifier.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Brightness_Modifier.h" />
     <ClInclude Include="CImg.h" />
+    <ClInclude Include="Negative_Modifier.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
