@@ -2,8 +2,17 @@
 #include <string>
 #include "Brightness_Modifier.h"
 #include "Negative_Modifier.h"
-
+#include "Contrast_Modifier.h"
 using namespace std;
+using namespace cimg_library;
+
+bool get_file(const char filename[], CImg<unsigned char>* image) {
+	if (!image->load(filename)) {
+		cout << "Did not find file at " << filename << endl;
+		return false;
+	}
+	return true;
+}
 
 string new_filename(const char original_filename[]) {
 	const char BASIC_NAME_ADDON[] = "_mod";
@@ -23,33 +32,36 @@ string new_filename(const char original_filename[], const char operation[], int 
 
 void change_brightness(const char filename[], int brightness) {
 	CImg<unsigned char> image;
-	if (!image.load(filename)) {
-		cout << "Did not find file at " << filename << endl;
-		return;
-	}
+	if (!get_file(filename, &image)) return;
+
 	cout << "Changing brightness of " << filename << " by " << brightness << endl;
 	Brightness_Modifier().change(image, brightness);
-	
+
 	image.save(new_filename(filename).c_str());
 }
 void flip_negative(const char filename[]) {
 	CImg<unsigned char> image;
-	if (!image.load(filename)) {
-		cout << "Did not find file at " << filename << endl;
-		return;
-	}
+	if (!get_file(filename, &image)) return;
 	Negative_Modifier().change(image);
+	image.save(new_filename(filename).c_str());
+}
+void change_contrast(const char filename[], float contrast) {
+	CImg<unsigned char> image;
+	if (!get_file(filename, &image)) return;
+	Contrast_Modifier().change(image, contrast);
 	image.save(new_filename(filename).c_str());
 }
 
 void handle_args(int argc, char* argv[]) {
 	if (argc > 1) {
 		if (string(argv[1]) == "--brightness" && argc == 4) {
-			
 			change_brightness(argv[2], stoi(argv[3]));
 		}
 		else if (string(argv[1]) == "--negative" && argc == 3) {
 			flip_negative(argv[2]);
+		}
+		else if (string(argv[1]) == "--contrast" && argc == 4){
+			change_contrast(argv[2], stof(argv[3]));
 		}
 		else {
 			cout << "Not doing anything" << endl;
