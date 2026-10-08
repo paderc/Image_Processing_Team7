@@ -143,12 +143,16 @@
     <ClCompile Include="Brightness_Modifier.cpp" />
     <ClCompile Include="Negative_Modifier.cpp" />
     <ClCompile Include="Contrast_Modifier.cpp" />
+    <ClCompile Include="Cmd_Info.cpp" />
+    <ClCompile Include="Vertical_Modifier.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Brightness_Modifier.h" />
     <ClInclude Include="CImg.h" />
     <ClInclude Include="Contrast_Modifier.h" />
+    <ClInclude Include="Modifier.h" />
     <ClInclude Include="Negative_Modifier.h" />
+    <ClInclude Include="Vertical_Modifier.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

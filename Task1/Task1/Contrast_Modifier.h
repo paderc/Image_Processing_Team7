@@ -1,10 +1,14 @@
 #pragma once
 #include "CImg.h"
 
+#include "Modifier.h"
+
 using namespace cimg_library;
 
-class Contrast_Modifier {
+
+class Contrast_Modifier : public Modifier {
 public:
-	Contrast_Modifier(){}
-	void change(CImg<unsigned char>& image, float contrast);
+	int contrast;
+	Contrast_Modifier(char* argv[]) : Modifier(argv), contrast(stoi(argv[3])){}
+	void modify();
 };

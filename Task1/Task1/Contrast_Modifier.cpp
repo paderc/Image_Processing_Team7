@@ -3,8 +3,9 @@
 
 using namespace cimg_library;
 
-void Contrast_Modifier::change(CImg<unsigned char>& image, float contrast) {
+void Contrast_Modifier::modify() {
+	int factor = (105 * (contrast + 100)) / (100 * (105 - contrast));
 	cimg_forXYC(image, x, y, c) {
-		throw ERROR_CALL_NOT_IMPLEMENTED;
+		image(x, y, c) = std::clamp(int(factor * (image(x, y, c) - 128) + 128), 0, 255);
 	}
 }

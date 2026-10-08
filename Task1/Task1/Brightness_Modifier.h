@@ -1,10 +1,14 @@
 #pragma once
 #include "CImg.h"
 
+#include "Modifier.h"
+
 using namespace cimg_library;
 
-class Brightness_Modifier {
+class Brightness_Modifier : public Modifier {
 public:
-	Brightness_Modifier(){}
-	void change(CImg<unsigned char>& image, int brightness);
+	int brightness;
+	Brightness_Modifier(char* argv[]) : Modifier(argv), brightness(stoi(argv[3])){}
+
+	void modify();
 };
