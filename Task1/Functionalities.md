@@ -1,14 +1,14 @@
 ~~(B1) Image brightness modification (--brightness)~~
 
-(B2) Image contrast modification (--contrast)
+~~(B2) Image contrast modification (--contrast)~~
 
-(B3) Negative (--negative)
+~~(B3) Negative (--negative)~~
 
 
 
 (G1) Horizontal flip (--hflip)
 
-(G2) Vertical flip (--vflip)
+~~(G2) Vertical flip (--vflip)~~
 
 (G3) Diagonal flip (--dflip)
 
