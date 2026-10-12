@@ -22,7 +22,7 @@
 
 
 
-(E1) Mean square error (--mse)
+~~(E1) Mean square error (--mse)~~
 
 (E2) Peak mean square error (--pmse)
 
