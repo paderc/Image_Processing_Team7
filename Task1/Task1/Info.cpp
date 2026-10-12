@@ -4,8 +4,9 @@
 
 #include "CImg.h"
 
-#include "Modifier.h"
 #include "Brightness_Modifier.h"
+#include "Contrast_Modifier.h"
+#include "Negative_Modifier.h"
 #include "Rotation_Modifier.h"
 
 using namespace std;
@@ -34,6 +35,20 @@ inline constexpr Info Brightness_Info{
     "Adjusts brightness of image",
     &make_modifier<Brightness_Modifier>
 };
+inline constexpr Info Contrast_Info{
+    2,
+    "--contrast",
+    "[filename] [value]",
+    "Adjusts contrast of image",
+    &make_modifier<Contrast_Modifier>
+};
+inline constexpr Info Negative_Info{
+    1,
+    "--negative",
+    "[filename]",
+    "Flips all the colors of image",
+    &make_modifier<Negative_Modifier>
+};
 
 inline constexpr Info HorizontalFlip_Info{
     1,
@@ -61,6 +76,8 @@ inline constexpr Info DiagonalFlip_Info{
 
 extern const array ALL_COMMANDS{
     Brightness_Info,
+    Contrast_Info,
+    Negative_Info
     HorizontalFlip_Info,
     VerticalFlip_Info,
     DiagonalFlip_Info,
