@@ -7,6 +7,9 @@
 #include "Brightness_Modifier.h"
 #include "Contrast_Modifier.h"
 #include "Negative_Modifier.h"
+#include "Shrinking_Modifier.h"
+#include "Median_Modifier.h"
+#include "Geometric_Mean_Modifier.h"
 
 using namespace std;
 using namespace cimg_library;
@@ -48,9 +51,33 @@ inline constexpr Info Negative_Info{
     "Flips all the colors of image",
     &make_modifier<Negative_Modifier>
 };
+inline constexpr Info Shrinking_Info{
+    2,
+    "--shrink",
+    "[filename] [value(0 to 1)]",
+    "Shrinks the image by desired factor from 0 to 1",
+    &make_modifier<Shrinking_Modifier>
+};
+inline constexpr Info Median_Info{
+    3,
+    "--median",
+    "[filename] [width(0 to 13)] [height(0 to 13)]",
+    "Applies a median filter to image, according to given width(0 to 13) and height(0 to 13) of filter rectangle",
+    &make_modifier<Median_Modifier>
+};
+inline constexpr Info Geometric_Mean_Info{
+    3,
+    "--gmean",
+    "[filename] [width(0 to 13)] [height(0 to 13)]",
+    "Applies a geometric mean filter to image, according to given width(0 to 13) and height(0 to 13) of filter rectangle",
+    &make_modifier<Geometric_Mean_Modifier>
+};
 
 extern const array ALL_COMMANDS{
     Brightness_Info,
     Contrast_Info,
-    Negative_Info
+    Negative_Info,
+    Shrinking_Info,
+    Median_Info,
+    Geometric_Mean_Info
 };

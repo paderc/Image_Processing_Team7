@@ -12,13 +12,13 @@
 
 (G3) Diagonal flip (--dflip)
 
-(G4) Image shrinking (--shrink)
+~~(G4) Image shrinking (--shrink)~~
 
 (G5) Image enlargement (--enlarge)
 
 
 
-(N1) Median filter (--median), geometric mean filter (--gmean)
+~~(N1) Median filter (--median), geometric mean filter (--gmean)~~
 
 
 

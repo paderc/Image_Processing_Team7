@@ -13,18 +13,21 @@ class Modifier
 protected:
 	virtual void modify_inherited() = 0;
 public:
-	string filename;
+	string filename, base_name, extension;
 	CImg<unsigned char> image;
 	Modifier(char* argv[]) : image(), filename() {
 		image.load(argv[2]);
 
 		filename = argv[2];
 		unsigned dot_index = filename.find_last_of(".");
-		string extension = filename.substr(dot_index);
-		string base_name = filename.substr(0, dot_index);
+		extension = filename.substr(dot_index);
+		base_name = filename.substr(0, dot_index);
 
 		filename = make_name(base_name, extension);
-		cout << filename << endl;
+	}
+
+	void init() {
+		filename = make_name(base_name, extension);
 	}
 
 	virtual void modify(bool timer, bool verbose) final;

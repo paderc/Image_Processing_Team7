@@ -1,6 +1,5 @@
 ﻿#include <iostream>
 #include <string>
-#include <Windows.h>
 #include <chrono>
 #include <string_view>
 
@@ -49,6 +48,8 @@ void handle_args(int argc, char* argv[]) {
 				if (argc == base_amt + cmd.required_commands + timer + verbose) {
 					auto modifier = cmd.factory(argv);
 
+					modifier->init();
+
 					modifier->modify(timer, verbose);
 
 					modifier->image.save(modifier->filename.c_str());					
@@ -63,7 +64,7 @@ void handle_args(int argc, char* argv[]) {
 			print_help();
 		}
 		else {
-			cout << "Use --help or -h for commands" << endl;
+			cout << Red << "Use --help or -h for commands" << Reset << endl;
 		}
 	}
 }
