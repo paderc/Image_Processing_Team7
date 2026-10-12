@@ -7,10 +7,10 @@
 #include "Brightness_Modifier.h"
 #include "Contrast_Modifier.h"
 #include "Negative_Modifier.h"
+#include "Rotation_Modifier.h"
 #include "Shrinking_Modifier.h"
 #include "Median_Modifier.h"
 #include "Geometric_Mean_Modifier.h"
-
 using namespace std;
 using namespace cimg_library;
 
@@ -73,6 +73,30 @@ inline constexpr Info Geometric_Mean_Info{
     &make_modifier<Geometric_Mean_Modifier>
 };
 
+inline constexpr Info HorizontalFlip_Info{
+    1,
+    "--hflip",
+    "[filename]",
+    "Flips the image horizontally",
+    &make_modifier<Rotation_Modifier>
+};
+
+inline constexpr Info VerticalFlip_Info{
+    1,
+    "--vflip",
+    "[filename]",
+    "Flips the image vertically",
+    &make_modifier<Rotation_Modifier>
+};
+
+inline constexpr Info DiagonalFlip_Info{
+    1,
+    "--dflip",
+    "[filename]",
+    "Flips the image diagonally",
+    &make_modifier<Rotation_Modifier>
+};
+
 extern const array ALL_COMMANDS{
     Brightness_Info,
     Contrast_Info,
@@ -80,4 +104,7 @@ extern const array ALL_COMMANDS{
     Shrinking_Info,
     Median_Info,
     Geometric_Mean_Info
+    HorizontalFlip_Info,
+    VerticalFlip_Info,
+    DiagonalFlip_Info,
 };
