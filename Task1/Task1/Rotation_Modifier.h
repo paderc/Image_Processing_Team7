@@ -15,6 +15,6 @@ public:
 
 	Rotation_Modifier(char* argv[]) : Modifier(argv), direction(argv[1]) {}
 
-	void modify_inherited();
+	void modify_inherited() override;
 };
 

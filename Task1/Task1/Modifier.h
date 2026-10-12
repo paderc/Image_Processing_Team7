@@ -12,6 +12,8 @@ class Modifier
 {
 protected:
 	virtual void modify_inherited() = 0;
+	virtual string make_name(string_view base_name, string_view extension);
+	virtual string describe();
 public:
 	string filename, base_name, extension;
 	CImg<unsigned char> image;
@@ -30,9 +32,8 @@ public:
 		filename = make_name(base_name, extension);
 	}
 
-	virtual void modify(bool timer, bool verbose) final;
-	virtual string make_name(string_view base_name, string_view extension);
-	virtual string describe();
+	virtual void modify(bool timer, bool verbose);
+	
 	
 	virtual ~Modifier() = default;
 };

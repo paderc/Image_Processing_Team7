@@ -16,7 +16,12 @@ using namespace cimg_library;
 constexpr const char* Reset = "\033[0m";
 constexpr const char* Red = "\033[31m";
 
-void print_help_for(Info cmd)
+void print_help_for(Modifier_Info cmd)
+{
+	cout << Red << "Use " << cmd.name << " " << cmd.details << Reset << endl;
+}
+
+void print_help_for(Measurer_Info cmd)
 {
 	cout << Red << "Use " << cmd.name << " " << cmd.details << Reset << endl;
 }
@@ -26,7 +31,7 @@ void print_unknown_cmd() {
 }
 void print_help() {
 	cout << "Available commands" << endl;
-	for (const Info& cmd : ALL_COMMANDS) {
+	for (const Modifier_Info& cmd : ALL_MODIFIERS) {
 		cout << cmd.name << "  -  " << cmd.description << endl;
 	}
 }
@@ -35,17 +40,18 @@ void handle_args(int argc, char* argv[]) {
 	unsigned short base_amt = 2;
 	if (argc > 1) {
 		string_view command(argv[1]);
-		for (const Info& cmd : ALL_COMMANDS) {
+		
+		bool timer = false;
+		bool verbose = false;
+
+		for (int i = base_amt; i < argc; i++) {
+			string_view s(argv[i]);
+			if (s == "--timer" || s == "-t") timer = true;
+			else if (s == "--verbose" || s == "-v") verbose = true;
+		}
+
+		for (const Modifier_Info& cmd : ALL_MODIFIERS) {
 			if (command == cmd.name) {
-				bool timer = false;
-				bool verbose = false;
-
-				for (int i = base_amt; i < argc; i++) {
-					string_view s(argv[i]);
-					if (s == "--timer" || s == "-t") timer = true;
-					else if (s == "--verbose" || s == "-v") verbose = true;
-				}
-
 				if (argc == base_amt + cmd.required_commands + timer + verbose) {
 					auto modifier = cmd.factory(argv);
 
@@ -53,12 +59,27 @@ void handle_args(int argc, char* argv[]) {
 
 					modifier->modify(timer, verbose);
 
-					modifier->image.save(modifier->filename.c_str());					
+					modifier->image.save(modifier->filename.c_str());
+					return;
 				}
 				else {
 					print_help_for(cmd);
+					return;
 				}
-				return;
+			}
+		}
+		for (const Measurer_Info& cmd : ALL_MEASURERS) {
+			if (command == cmd.name) {
+				if (argc == base_amt + cmd.required_commands + timer + verbose) {
+					auto measurer = cmd.factory(argv);
+
+					measurer->measure(timer, verbose);
+					return;
+				}
+				else {
+					print_help_for(cmd);
+					return;
+				}
 			}
 		}
 		if (command == "--help" || command == "-h") {

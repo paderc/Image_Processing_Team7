@@ -13,5 +13,5 @@ public:
 	int brightness;
 	Brightness_Modifier(char* argv[]) : Modifier(argv), brightness(stoi(argv[3])){}
 
-	void modify_inherited();
+	void modify_inherited() override;
 };
