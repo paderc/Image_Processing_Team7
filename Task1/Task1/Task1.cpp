@@ -7,6 +7,7 @@
 #include "Brightness_Modifier.h"
 #include "Negative_Modifier.h"
 #include "Contrast_Modifier.h"
+#include "Rotation_Modifier.h"
 
 #include "Info.cpp"
 

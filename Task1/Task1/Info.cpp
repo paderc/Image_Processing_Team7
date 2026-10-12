@@ -6,6 +6,7 @@
 
 #include "Modifier.h"
 #include "Brightness_Modifier.h"
+#include "Rotation_Modifier.h"
 
 using namespace std;
 using namespace cimg_library;
@@ -34,6 +35,33 @@ inline constexpr Info Brightness_Info{
     &make_modifier<Brightness_Modifier>
 };
 
+inline constexpr Info HorizontalFlip_Info{
+    1,
+    "--hflip",
+    "[filename]",
+    "Flips the image horizontally",
+    &make_modifier<Rotation_Modifier>
+};
+
+inline constexpr Info VerticalFlip_Info{
+    1,
+    "--vflip",
+    "[filename]",
+    "Flips the image vertically",
+    &make_modifier<Rotation_Modifier>
+};
+
+inline constexpr Info DiagonalFlip_Info{
+    1,
+    "--dflip",
+    "[filename]",
+    "Flips the image diagonally",
+    &make_modifier<Rotation_Modifier>
+};
+
 extern const array ALL_COMMANDS{
     Brightness_Info,
+    HorizontalFlip_Info,
+    VerticalFlip_Info,
+    DiagonalFlip_Info,
 };

@@ -140,6 +140,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Modifier.cpp" />
+    <ClCompile Include="Rotation_Modifier.cpp" />
     <ClCompile Include="Task1.cpp" />
     <ClCompile Include="Brightness_Modifier.cpp" />
     <ClCompile Include="Negative_Modifier.cpp" />
@@ -151,6 +152,7 @@
     <ClInclude Include="Contrast_Modifier.h" />
     <ClInclude Include="Modifier.h" />
     <ClInclude Include="Negative_Modifier.h" />
+    <ClInclude Include="Rotation_Modifier.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
