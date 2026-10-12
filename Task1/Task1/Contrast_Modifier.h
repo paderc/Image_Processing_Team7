@@ -10,5 +10,5 @@ class Contrast_Modifier : public Modifier {
 public:
 	int contrast;
 	Contrast_Modifier(char* argv[]) : Modifier(argv), contrast(stoi(argv[3])){}
-	void modify();
+	void modify_inherited();
 };
