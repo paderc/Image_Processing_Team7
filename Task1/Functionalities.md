@@ -24,9 +24,9 @@
 
 ~~(E1) Mean square error (--mse)~~
 
-(E2) Peak mean square error (--pmse)
+~~(E2) Peak mean square error (--pmse)~~
 
-(E3) Signal to noise ratio (--snr)
+~~(E3) Signal to noise ratio (--snr)~~
 
 (E4) Peak signal to noise ratio (--psnr)
 

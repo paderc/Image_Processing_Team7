@@ -15,6 +15,7 @@ using namespace cimg_library;
 
 constexpr const char* Reset = "\033[0m";
 constexpr const char* Red = "\033[31m";
+constexpr const char* Green = "\033[32m";
 
 void print_help_for(Modifier_Info cmd)
 {
@@ -30,10 +31,12 @@ void print_unknown_cmd() {
 	cout << "Unknown Command" << endl << "Use --help for commands" << endl;
 }
 void print_help() {
-	cout << "Available commands" << endl;
+	cout << Green << "Available commands" << Reset << endl;
+	cout << Green << "---" << Reset << endl;
 	for (const Modifier_Info& cmd : ALL_MODIFIERS) {
 		cout << cmd.name << "  -  " << cmd.description << endl;
 	}
+	cout << Green << "---" << Reset << endl;
 }
 void handle_args(int argc, char* argv[]) {
 	//Base command amount -> program, command

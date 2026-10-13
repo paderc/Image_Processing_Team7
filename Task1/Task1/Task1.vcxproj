@@ -144,8 +144,10 @@
     <ClCompile Include="Measurer.cpp" />
     <ClCompile Include="Median_Modifier.cpp" />
     <ClCompile Include="Modifier.cpp" />
+    <ClCompile Include="Peak_Mean_Square_Error.cpp" />
     <ClCompile Include="Rotation_Modifier.cpp" />
     <ClCompile Include="Shrinking_Modifier.cpp" />
+    <ClCompile Include="Signal_To_Noise_Ratio.cpp" />
     <ClCompile Include="Task1.cpp" />
     <ClCompile Include="Brightness_Modifier.cpp" />
     <ClCompile Include="Negative_Modifier.cpp" />
@@ -161,8 +163,10 @@
     <ClInclude Include="Median_Modifier.h" />
     <ClInclude Include="Modifier.h" />
     <ClInclude Include="Negative_Modifier.h" />
+    <ClInclude Include="Peak_Mean_Square_Error.h" />
     <ClInclude Include="Rotation_Modifier.h" />
     <ClInclude Include="Shrinking_Modifier.h" />
+    <ClInclude Include="Signal_To_Noise_Ratio.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

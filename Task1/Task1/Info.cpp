@@ -13,6 +13,8 @@
 #include "Geometric_Mean_Modifier.h"
 
 #include "Mean_Square_Error.h"
+#include "Peak_Mean_Square_Error.h"
+#include "Signal_To_Noise_Ratio.h"
 
 using namespace std;
 using namespace cimg_library;
@@ -119,6 +121,20 @@ inline constexpr Measurer_Info Mean_Square_Error_Info{
     "Compares noise with mean square error method",
     &make_measurer<Mean_Square_Error>
 };
+inline constexpr Measurer_Info Peak_Mean_Square_Error_Info{
+    2,
+    "--pmse",
+    "[filename 1] [filename 2]",
+    "Compares noise with peak mean square error method",
+    &make_measurer<Peak_Mean_Square_Error>
+};
+inline constexpr Measurer_Info Signal_To_Noise_Ratio_Info{
+    2,
+    "--snr",
+    "[filename 1] [filename 2]",
+    "Compares noise with signal to noise ratio method",
+    &make_measurer<Signal_To_Noise_Ratio>
+};
 
 extern const array ALL_MODIFIERS{
     Brightness_Info,
@@ -129,8 +145,10 @@ extern const array ALL_MODIFIERS{
     Geometric_Mean_Info,
     HorizontalFlip_Info,
     VerticalFlip_Info,
-    DiagonalFlip_Info,
+    DiagonalFlip_Info
 };
 extern const array ALL_MEASURERS{
-    Mean_Square_Error_Info
+    Mean_Square_Error_Info,
+    Peak_Mean_Square_Error_Info,
+    Signal_To_Noise_Ratio_Info
 };
