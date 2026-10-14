@@ -8,5 +8,6 @@ void Signal_To_Noise_Ratio::measure_inherited() {
 		img1_sum += image1(x, y, c);
 		img2_sum += image2(x, y, c);
 	}
-	error = (img1_sum * img1_sum) / ((img1_sum - img2_sum) * (img1_sum - img2_sum));
+	double diff = img1_sum - img2_sum;
+	error = 10 * log10((img1_sum * img1_sum) / (diff * diff));
 }

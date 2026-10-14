@@ -6,11 +6,8 @@ void Peak_Mean_Square_Error::measure_inherited() {
 	
 	const unsigned color_spectrum = image1.spectrum();
 
-	unsigned max = 0;
-	cimg_for(image1, ptr, pixel_type) {
-		unsigned v = *ptr;
-		if (v > max) max = v;
-	}
+	double max = (1 << (sizeof(pixel_type) * 8)) - 1;
+
 	for (unsigned y = 0; y < height; y++) {
 		for (unsigned x = 0; x < width; x++) {
 			for (unsigned c = 0; c < color_spectrum; c++) {

@@ -1,14 +1,7 @@
 ﻿#include <iostream>
-#include <string>
-#include <chrono>
 #include <string_view>
 
-#include "Brightness_Modifier.h"
-#include "Negative_Modifier.h"
-#include "Contrast_Modifier.h"
-#include "Rotation_Modifier.h"
-
-#include "Info.cpp"
+#include "Info.h"
 
 using namespace std;
 using namespace cimg_library;
@@ -34,6 +27,9 @@ void print_help() {
 	cout << Green << "Available commands" << Reset << endl;
 	cout << Green << "---" << Reset << endl;
 	for (const Modifier_Info& cmd : ALL_MODIFIERS) {
+		cout << cmd.name << "  -  " << cmd.description << endl;
+	}
+	for (const Measurer_Info& cmd : ALL_MEASURERS) {
 		cout << cmd.name << "  -  " << cmd.description << endl;
 	}
 	cout << Green << "---" << Reset << endl;

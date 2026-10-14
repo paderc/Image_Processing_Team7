@@ -1,8 +1,11 @@
+#pragma once
 #include <array>
 #include <memory>
 #include <string_view>
 
 #include "CImg.h"
+#include "Modifier.h"
+#include "Measurer.h"
 
 #include "Brightness_Modifier.h"
 #include "Contrast_Modifier.h"
@@ -15,6 +18,8 @@
 #include "Mean_Square_Error.h"
 #include "Peak_Mean_Square_Error.h"
 #include "Signal_To_Noise_Ratio.h"
+#include "Peak_Signal_To_Noise_Ratio.h"
+#include "Maximum_Difference.h"
 
 using namespace std;
 using namespace cimg_library;
@@ -135,8 +140,22 @@ inline constexpr Measurer_Info Signal_To_Noise_Ratio_Info{
     "Compares noise with signal to noise ratio method",
     &make_measurer<Signal_To_Noise_Ratio>
 };
+inline constexpr Measurer_Info Peak_Signal_To_Noise_Ratio_Info{
+    2,
+    "--psnr",
+    "[filename 1] [filename 2]",
+    "Compares noise with peak signal to noise ratio method",
+    &make_measurer<Peak_Signal_To_Noise_Ratio>
+};
+inline constexpr Measurer_Info Maximum_Difference_Info{
+    2,
+    "--md",
+    "[filename 1] [filename 2]",
+    "Compares noise with maximum difference method",
+    &make_measurer<Maximum_Difference>
+};
 
-extern const array ALL_MODIFIERS{
+inline constexpr array ALL_MODIFIERS{
     Brightness_Info,
     Contrast_Info,
     Negative_Info,
@@ -147,8 +166,10 @@ extern const array ALL_MODIFIERS{
     VerticalFlip_Info,
     DiagonalFlip_Info
 };
-extern const array ALL_MEASURERS{
+inline constexpr array ALL_MEASURERS{
     Mean_Square_Error_Info,
     Peak_Mean_Square_Error_Info,
-    Signal_To_Noise_Ratio_Info
+    Signal_To_Noise_Ratio_Info,
+    Peak_Signal_To_Noise_Ratio_Info,
+    Maximum_Difference_Info
 };

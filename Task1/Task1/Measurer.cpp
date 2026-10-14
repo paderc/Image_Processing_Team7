@@ -20,5 +20,5 @@ void Measurer::measure(bool timer, bool verbose) {
 		cout << describe() << endl;
 	}
 	
-	cout << "Error between " << filename1 << " and " << filename2 << " is " << error << "pixel^2" << endl;
+	cout << "Error between " << filename1 << " and " << filename2 << " is " << error << " [pixel^2]" << endl;
 }
