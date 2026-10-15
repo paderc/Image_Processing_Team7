@@ -139,6 +139,7 @@
     </Manifest>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Enlargement_Modifier.cpp" />
     <ClCompile Include="Geometric_Mean_Modifier.cpp" />
     <ClCompile Include="Maximum_Difference.cpp" />
     <ClCompile Include="Mean_Square_Error.cpp" />
@@ -159,6 +160,7 @@
     <ClInclude Include="Brightness_Modifier.h" />
     <ClInclude Include="CImg.h" />
     <ClInclude Include="Contrast_Modifier.h" />
+    <ClInclude Include="Enlargement_Modifier.h" />
     <ClInclude Include="Geometric_Mean_Modifier.h" />
     <ClInclude Include="Info.h" />
     <ClInclude Include="Maximum_Difference.h" />
