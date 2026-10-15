@@ -6,11 +6,11 @@
 
 
 
-(G1) Horizontal flip (--hflip)
+~~(G1) Horizontal flip (--hflip)~~
 
 ~~(G2) Vertical flip (--vflip)~~
 
-(G3) Diagonal flip (--dflip)
+~~(G3) Diagonal flip (--dflip)~~
 
 ~~(G4) Image shrinking (--shrink)~~
 
@@ -28,7 +28,7 @@
 
 ~~(E3) Signal to noise ratio (--snr)~~
 
-(E4) Peak signal to noise ratio (--psnr)
+~~(E4) Peak signal to noise ratio (--psnr)~~
 
-(E5) Maximum difference (--md)
+~~(E5) Maximum difference (--md)~~
 
