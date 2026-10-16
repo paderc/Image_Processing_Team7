@@ -18,7 +18,7 @@
 
 
 
-~~(N1) Median filter (--median), geometric mean filter (--gmean)~~
+~~(N1) Median filter (--median), Alpha-Trimmed filter(--alpha), geometric mean filter (--gmean)~~
 
 
 

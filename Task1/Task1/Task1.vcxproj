@@ -139,6 +139,7 @@
     </Manifest>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Alpha_Trimmed_Modifier.cpp" />
     <ClCompile Include="Enlargement_Modifier.cpp" />
     <ClCompile Include="Geometric_Mean_Modifier.cpp" />
     <ClCompile Include="Maximum_Difference.cpp" />
@@ -157,6 +158,7 @@
     <ClCompile Include="Contrast_Modifier.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Alpha_Trimmed_Modifier.h" />
     <ClInclude Include="Brightness_Modifier.h" />
     <ClInclude Include="CImg.h" />
     <ClInclude Include="Contrast_Modifier.h" />

@@ -14,6 +14,7 @@
 #include "Shrinking_Modifier.h"
 #include "Median_Modifier.h"
 #include "Geometric_Mean_Modifier.h"
+#include "Alpha_Trimmed_Modifier.h"
 
 #include "Mean_Square_Error.h"
 #include "Peak_Mean_Square_Error.h"
@@ -119,6 +120,13 @@ inline constexpr Modifier_Info DiagonalFlip_Info{
     "Flips the image diagonally",
     &make_modifier<Rotation_Modifier>
 };
+inline constexpr Modifier_Info Alpha_Trimmed_Modifier_Info{
+    4,
+    "--alpha",
+    "[filename] [width (0 to 13)] [height (0 to 13)] [elements to skip (. >= 2)]",
+    "Trims the pixels in neighbourhood of width and height, according to elements to skip",
+    &make_modifier<Alpha_Trimmed_Modifier>
+};
 inline constexpr Measurer_Info Mean_Square_Error_Info{
     2,
     "--mse",
@@ -164,7 +172,8 @@ inline constexpr array ALL_MODIFIERS{
     Geometric_Mean_Info,
     HorizontalFlip_Info,
     VerticalFlip_Info,
-    DiagonalFlip_Info
+    DiagonalFlip_Info,
+    Alpha_Trimmed_Modifier_Info
 };
 inline constexpr array ALL_MEASURERS{
     Mean_Square_Error_Info,
