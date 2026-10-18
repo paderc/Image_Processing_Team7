@@ -1,18 +1,20 @@
 #include "Maximum_Difference.h"
+#include <algorithm>
+#include <cstdlib>
 
 using namespace cimg_library;
 
 void Maximum_Difference::measure_inherited() {
-	int total_diff = 0;
-	
-	unsigned color_spectrum = image1.spectrum();
+    const auto* a = image1.data();
+    const auto* b = image2.data();
+    const auto count = image1.size();
 
-	cimg_forXY(image1, x, y) {
-		int current_total = 0;
-		for (int c = 0; c < color_spectrum; c++) {
-			current_total += abs(image1(x, y, c) - image2(x, y, c));
-		}
-		if (current_total > total_diff) total_diff = current_total;
-	}
-	error = total_diff;
+    int maximum = 0;
+
+    for (decltype(image1.size()) i = 0; i < count; ++i)
+    {
+        maximum = std::max(maximum, std::abs(int(a[i]) - int(b[i])));
+    }
+
+    error = maximum;
 }

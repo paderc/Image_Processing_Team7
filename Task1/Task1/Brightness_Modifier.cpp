@@ -12,7 +12,7 @@ void Brightness_Modifier::modify_inherited() {
     constexpr int allowed_values = color_range - 1;
 
     pixel_type lut[color_range];
-    for (unsigned i = 0; i < allowed_values; i++) {
+    for (unsigned i = 0; i < color_range; i++) {
         int v = i + brightness;
         lut[i] = clamp(v, 0, allowed_values);
     }

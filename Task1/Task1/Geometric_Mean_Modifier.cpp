@@ -1,45 +1,54 @@
 #include "Geometric_Mean_Modifier.h"
-#include <vector>
 #include <algorithm>
+#include <array>
 #include <cmath>
-using namespace std;
+#include <utility>
 
 void Geometric_Mean_Modifier::modify_inherited() {
-	using pixel_type = decltype(image)::value_type;
-	const double possible_values = (1 << (sizeof(pixel_type) * 8)) - 1;
+    static const auto log_lut = [] {
+        std::array<double, 256> table{};
 
-	const unsigned spectrum = image.spectrum();
-	CImg<pixel_type> new_image(width, height, 1, spectrum);
+        for (int i = 1; i < 256; ++i)
+            table[i] = std::log(double(i));
 
-	const int x_lo = -(m - 1) / 2, x_hi = m / 2;
-	const int y_lo = -(n - 1) / 2, y_hi = n / 2;
+        return table;
+        }();
 
-	vector<pixel_type> values;
-	values.reserve(m * n);
+    const int w = image.width();
+    const int h = image.height();
 
-	for (int y = 0; y < height; y++) {
-		for (int x = 0; x < width; x++) {
-			for (unsigned c = 0; c < spectrum; c++) {
-				values.clear();
+    CImg<unsigned char> output(w, h, 1, image.spectrum());
 
-				for (int i = x_lo; i <= x_hi; i++) {
-					if (x + i < 0 || x + i >= width) continue;
+    const int x_lo = -(m - 1) / 2, x_hi = m / 2;
+    const int y_lo = -(n - 1) / 2, y_hi = n / 2;
 
-					for (int j = y_lo; j <= y_hi; j++) {
-						if (y + j < 0 || y + j >= height) continue;
-						values.push_back(image(x + i, y + j, 0, c));
-					}
-				}
-				double final = 1;
-				for (auto v : values) {
-					final *= v;
-				}
-				final = pow(final, 1 / double(m * n));
-				new_image(x, y, 0, c) = static_cast<pixel_type>(clamp(final, 0.0, possible_values));
-			}
-		}
-	}
-	image = move(new_image);
+    cimg_forC(image, c) {
+        cimg_forXY(image, x, y) {
+            double sum_log = 0.0;
+            int count = 0;
+            bool has_zero = false;
+
+            for (int ny = std::max(0, y + y_lo);
+                ny <= std::min(h - 1, y + y_hi); ++ny) {
+                for (int nx = std::max(0, x + x_lo);
+                    nx <= std::min(w - 1, x + x_hi); ++nx) {
+                    const auto value = image(nx, ny, 0, c);
+
+                    has_zero |= value == 0;
+                    sum_log += log_lut[value];
+                    ++count;
+                }
+            }
+
+            const double mean =
+                has_zero ? 0.0 : std::exp(sum_log / count);
+
+            output(x, y, 0, c) = static_cast<unsigned char>(
+                std::clamp(std::lround(mean), 0L, 255L));
+        }
+    }
+
+    image = std::move(output);
 }
 
 string Geometric_Mean_Modifier::make_name(string_view base_name, string_view extension) {

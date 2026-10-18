@@ -20,5 +20,32 @@ void Measurer::measure(bool timer, bool verbose) {
 		cout << describe() << endl;
 	}
 	
-	cout << "Error between " << filename1 << " and " << filename2 << " is " << error << " [pixel^2]" << endl;
+	cout << "Error between " << filename1 << " and " << filename2 << " is " << error << unit << endl;
+}
+double Measurer::squared_error_sum() const {
+	const auto* a = image1.data();
+	const auto* b = image2.data();
+	const auto count = image1.size();
+
+	double sum = 0.0;
+
+	for (decltype(image1.size()) i = 0; i < count; ++i) {
+		const int difference = int(a[i]) - int(b[i]);
+		sum += double(difference) * difference;
+	}
+
+	return sum;
+}
+double Measurer::reference_peak() const {
+	const auto* values = image1.data();
+	const auto count = image1.size();
+
+	unsigned char peak = 0;
+
+	for (decltype(image1.size()) i = 0; i < count; ++i)
+	{
+		if (values[i] > peak) peak = values[i];
+	}
+
+	return peak;
 }

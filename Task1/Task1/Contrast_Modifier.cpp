@@ -13,7 +13,7 @@ void Contrast_Modifier::modify_inherited() {
 	unsigned factor = (105 * (contrast + 100)) / (100 * (105 - contrast));
 
 	pixel_type lut[color_range];
-	for (int i = 0; i < allowed_values; i++) {
+	for (int i = 0; i < color_range; i++) {
 		int v = i * factor;
 		lut[i] = clamp(v, 0, allowed_values);
 	}

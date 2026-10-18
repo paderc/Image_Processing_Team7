@@ -1,19 +1,11 @@
 #include "Peak_Signal_To_Noise_Ratio.h"
+#include <cmath>
+#include <limits>
 
 void Peak_Signal_To_Noise_Ratio::measure_inherited() {
+    const double noise = squared_error_sum();
+    const double peak = reference_peak();
+    const double infinity = std::numeric_limits<double>::infinity();
 
-	using pixel_type = decltype(image1)::value_type;
-
-	const unsigned color_spectrum = image1.spectrum();
-
-	double max = (1 << (sizeof(pixel_type) * 8)) - 1;
-	
-	double img1_sum = 0;
-	double img2_sum = 0;
-	cimg_forXYC(image1, x, y, c) {
-		img1_sum += image1(x, y, c);
-		img2_sum += image2(x, y, c);
-	}
-	double diff = img1_sum - img2_sum;
-	error = 10 * log10((max * max) / (diff * diff));
+    error = noise == 0.0 ? infinity : peak == 0.0 ? -infinity : 10.0 * std::log10(double(image1.size()) * peak * peak / noise);
 };

@@ -1,13 +1,23 @@
 #include "Signal_To_Noise_Ratio.h"
-#include <math.h>
+#include <cmath>
+#include <limits>
 
 void Signal_To_Noise_Ratio::measure_inherited() {
-	double img1_sum = 0;
-	double img2_sum = 0;
-	cimg_forXYC(image1, x, y, c) {
-		img1_sum += image1(x, y, c);
-		img2_sum += image2(x, y, c);
-	}
-	double diff = img1_sum - img2_sum;
-	error = 10 * log10((img1_sum * img1_sum) / (diff * diff));
+    const auto* a = image1.data();
+    const auto* b = image2.data();
+    const auto count = image1.size();
+
+    double signal = 0.0;
+    double noise = 0.0;
+
+    for (decltype(image1.size()) i = 0; i < count; ++i) {
+        const int difference = int(a[i]) - int(b[i]);
+
+        signal += double(a[i]) * a[i];
+        noise += double(difference) * difference;
+    }
+
+    const double infinity = std::numeric_limits<double>::infinity();
+
+    error = noise == 0.0 ? infinity : signal == 0.0 ? -infinity : 10.0 * std::log10(signal / noise);
 }
