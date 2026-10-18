@@ -15,6 +15,7 @@
 #include "Median_Modifier.h"
 #include "Geometric_Mean_Modifier.h"
 #include "Alpha_Trimmed_Modifier.h"
+#include "Enlargement_Modifier.h"
 
 #include "Mean_Square_Error.h"
 #include "Peak_Mean_Square_Error.h"
@@ -162,6 +163,13 @@ inline constexpr Measurer_Info Maximum_Difference_Info{
     "Compares noise with maximum difference method",
     &make_measurer<Maximum_Difference>
 };
+inline constexpr Modifier_Info Enlargement_Info{
+    2,
+    "--enlarge",
+    "[filename] [factor >= 1]",
+    "Enlarges the image using nearest-neighbor sampling",
+    &make_modifier<Enlargement_Modifier>
+};
 
 inline constexpr array ALL_MODIFIERS{
     Brightness_Info,
@@ -173,7 +181,8 @@ inline constexpr array ALL_MODIFIERS{
     HorizontalFlip_Info,
     VerticalFlip_Info,
     DiagonalFlip_Info,
-    Alpha_Trimmed_Modifier_Info
+    Alpha_Trimmed_Modifier_Info,
+    Enlargement_Info
 };
 inline constexpr array ALL_MEASURERS{
     Mean_Square_Error_Info,
