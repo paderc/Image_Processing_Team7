@@ -16,6 +16,7 @@
 #include "Geometric_Mean_Modifier.h"
 #include "Alpha_Trimmed_Modifier.h"
 #include "Enlargement_Modifier.h"
+#include "Noise_Maker.h"
 
 #include "Mean_Square_Error.h"
 #include "Peak_Mean_Square_Error.h"
@@ -128,6 +129,14 @@ inline constexpr Modifier_Info Alpha_Trimmed_Modifier_Info{
     "Trims the pixels in neighbourhood of width and height, according to elements to skip",
     &make_modifier<Alpha_Trimmed_Modifier>
 };
+inline constexpr Modifier_Info Noise_Maker_Modifier_Info{
+    2,
+    "--noise",
+    "[filename] [harshness (0 to 10)]",
+    "Adds noise to the image, according to the specified harshness level",
+    &make_modifier<Noise_Maker>
+};
+
 inline constexpr Measurer_Info Mean_Square_Error_Info{
     2,
     "--mse",
@@ -182,7 +191,8 @@ inline constexpr array ALL_MODIFIERS{
     VerticalFlip_Info,
     DiagonalFlip_Info,
     Alpha_Trimmed_Modifier_Info,
-    Enlargement_Info
+    Enlargement_Info,
+    Noise_Maker_Modifier_Info
 };
 inline constexpr array ALL_MEASURERS{
     Mean_Square_Error_Info,

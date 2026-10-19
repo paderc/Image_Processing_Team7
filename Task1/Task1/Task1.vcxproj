@@ -147,6 +147,7 @@
     <ClCompile Include="Measurer.cpp" />
     <ClCompile Include="Median_Modifier.cpp" />
     <ClCompile Include="Modifier.cpp" />
+    <ClCompile Include="Noise_Maker.cpp" />
     <ClCompile Include="Peak_Mean_Square_Error.cpp" />
     <ClCompile Include="Peak_Signal_To_Noise_Ratio.cpp" />
     <ClCompile Include="Rotation_Modifier.cpp" />
@@ -171,6 +172,7 @@
     <ClInclude Include="Median_Modifier.h" />
     <ClInclude Include="Modifier.h" />
     <ClInclude Include="Negative_Modifier.h" />
+    <ClInclude Include="Noise_Maker.h" />
     <ClInclude Include="Peak_Mean_Square_Error.h" />
     <ClInclude Include="Peak_Signal_To_Noise_Ratio.h" />
     <ClInclude Include="Rotation_Modifier.h" />
