@@ -8,7 +8,7 @@ using namespace std;
 void Brightness_Modifier::modify_inherited() {
     using pixel_type = decltype(image)::value_type;
 
-    constexpr int color_range = 1 << (sizeof(pixel_type) * 8);
+    constexpr int color_range = std::size_t(std::numeric_limits<pixel_type>::max()) + 1;;
     constexpr int allowed_values = color_range - 1;
 
     pixel_type lut[color_range];

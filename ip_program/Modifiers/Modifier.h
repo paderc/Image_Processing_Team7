@@ -3,7 +3,7 @@
 #include <string_view>
 #include <iostream>
 
-#include "CImg.h"
+#include "../CImg.h"
 
 using namespace std;
 using namespace cimg_library;

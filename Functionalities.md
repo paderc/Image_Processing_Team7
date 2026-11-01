@@ -1,34 +1,12 @@
-~~(B1) Image brightness modification (--brightness)~~
+(H4) Power 2/3 final probability density function (--hpower).
 
-~~(B2) Image contrast modification (--contrast)~~
+(C1) Mean (--cmean). Variance (--cvariance).
+(C2) Standard deviation (--cstdev). Variation coefficient I (--cvarcoi).
+(C3) Asymmetry coefficient (--casyco).
+(C4) Flattening coefficient (--cflaco).
+(C5) Variation coefficient II (--cvarcoii).
+(C6) Information source entropy (--centropy).
 
-~~(B3) Negative (--negative)~~
+(S5) Extraction of details III. Without direcition, laplacian filter (--slaplace).
 
-
-
-~~(G1) Horizontal flip (--hflip)~~
-
-~~(G2) Vertical flip (--vflip)~~
-
-~~(G3) Diagonal flip (--dflip)~~
-
-~~(G4) Image shrinking (--shrink)~~
-
-(G5) Image enlargement (--enlarge)
-
-
-
-~~(N1) Median filter (--median), Alpha-Trimmed filter(--alpha), geometric mean filter (--gmean)~~
-
-
-
-~~(E1) Mean square error (--mse)~~
-
-~~(E2) Peak mean square error (--pmse)~~
-
-~~(E3) Signal to noise ratio (--snr)~~
-
-~~(E4) Peak signal to noise ratio (--psnr)~~
-
-~~(E5) Maximum difference (--md)~~
-
+(O2) Roberts operator (--orobertsii).

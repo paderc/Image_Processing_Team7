@@ -4,25 +4,26 @@
 #include <string_view>
 
 #include "CImg.h"
-#include "Modifier.h"
-#include "Measurer.h"
+#include "Modifiers/Modifier.h"
+#include "Measurers/Measurer.h"
 
-#include "Brightness_Modifier.h"
-#include "Contrast_Modifier.h"
-#include "Negative_Modifier.h"
-#include "Rotation_Modifier.h"
-#include "Shrinking_Modifier.h"
-#include "Median_Modifier.h"
-#include "Geometric_Mean_Modifier.h"
-#include "Alpha_Trimmed_Modifier.h"
-#include "Enlargement_Modifier.h"
-#include "Noise_Maker.h"
 
-#include "Mean_Square_Error.h"
-#include "Peak_Mean_Square_Error.h"
-#include "Signal_To_Noise_Ratio.h"
-#include "Peak_Signal_To_Noise_Ratio.h"
-#include "Maximum_Difference.h"
+#include "Modifiers/Brightness_Modifier.h"
+#include "Modifiers/Contrast_Modifier.h"
+#include "Modifiers/Negative_Modifier.h"
+#include "Modifiers/Rotation_Modifier.h"
+#include "Modifiers/Shrinking_Modifier.h"
+#include "Modifiers/Median_Modifier.h"
+#include "Modifiers/Geometric_Mean_Modifier.h"
+#include "Modifiers/Alpha_Trimmed_Modifier.h"
+#include "Modifiers/Enlargement_Modifier.h"
+#include "Modifiers/Noise_Maker.h"
+
+#include "Measurers/Mean_Square_Error.h"
+#include "Measurers/Peak_Mean_Square_Error.h"
+#include "Measurers/Signal_To_Noise_Ratio.h"
+#include "Measurers/Peak_Signal_To_Noise_Ratio.h"
+#include "Measurers/Maximum_Difference.h"
 
 using namespace std;
 using namespace cimg_library;

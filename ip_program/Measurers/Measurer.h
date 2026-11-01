@@ -2,7 +2,7 @@
 #include <string>
 #include <iostream>
 
-#include "CImg.h"
+#include "../CImg.h"
 
 using namespace cimg_library;
 using namespace std;

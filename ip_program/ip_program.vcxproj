@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -140,45 +140,53 @@
     </Manifest>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Alpha_Trimmed_Modifier.cpp" />
-    <ClCompile Include="Enlargement_Modifier.cpp" />
-    <ClCompile Include="Geometric_Mean_Modifier.cpp" />
-    <ClCompile Include="Maximum_Difference.cpp" />
-    <ClCompile Include="Mean_Square_Error.cpp" />
-    <ClCompile Include="Measurer.cpp" />
-    <ClCompile Include="Median_Modifier.cpp" />
-    <ClCompile Include="Modifier.cpp" />
-    <ClCompile Include="Noise_Maker.cpp" />
-    <ClCompile Include="Peak_Mean_Square_Error.cpp" />
-    <ClCompile Include="Peak_Signal_To_Noise_Ratio.cpp" />
-    <ClCompile Include="Rotation_Modifier.cpp" />
-    <ClCompile Include="Shrinking_Modifier.cpp" />
-    <ClCompile Include="Signal_To_Noise_Ratio.cpp" />
-    <ClCompile Include="Task1.cpp" />
-    <ClCompile Include="Brightness_Modifier.cpp" />
-    <ClCompile Include="Negative_Modifier.cpp" />
-    <ClCompile Include="Contrast_Modifier.cpp" />
+    <Image Include="monkey.bmp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Alpha_Trimmed_Modifier.h" />
-    <ClInclude Include="Brightness_Modifier.h" />
+    <ClCompile Include="Histograms\Histogram_Data.cpp" />
+    <ClCompile Include="Histograms\Histogram.cpp" />
+    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Measurers\Maximum_Difference.cpp" />
+    <ClCompile Include="Measurers\Mean_Square_Error.cpp" />
+    <ClCompile Include="Measurers\Measurer.cpp" />
+    <ClCompile Include="Measurers\Noise_Maker.cpp" />
+    <ClCompile Include="Measurers\Peak_Mean_Square_Error.cpp" />
+    <ClCompile Include="Measurers\Peak_Signal_To_Noise_Ratio.cpp" />
+    <ClCompile Include="Measurers\Signal_To_Noise_Ratio.cpp" />
+    <ClCompile Include="Modifiers\Alpha_Trimmed_Modifier.cpp" />
+    <ClCompile Include="Modifiers\Brightness_Modifier.cpp" />
+    <ClCompile Include="Modifiers\Contrast_Modifier.cpp" />
+    <ClCompile Include="Modifiers\Enlargement_Modifier.cpp" />
+    <ClCompile Include="Modifiers\Geometric_Mean_Modifier.cpp" />
+    <ClCompile Include="Modifiers\Median_Modifier.cpp" />
+    <ClCompile Include="Modifiers\Modifier.cpp" />
+    <ClCompile Include="Modifiers\Negative_Modifier.cpp" />
+    <ClCompile Include="Modifiers\Noise_Maker.cpp" />
+    <ClCompile Include="Modifiers\Rotation_Modifier.cpp" />
+    <ClCompile Include="Modifiers\Shrinking_Modifier.cpp" />
+  </ItemGroup>
+  <ItemGroup>
     <ClInclude Include="CImg.h" />
-    <ClInclude Include="Contrast_Modifier.h" />
-    <ClInclude Include="Enlargement_Modifier.h" />
-    <ClInclude Include="Geometric_Mean_Modifier.h" />
+    <ClInclude Include="Histograms\Histogram_Data.h" />
+    <ClInclude Include="Histograms\Histogram.h" />
     <ClInclude Include="Info.h" />
-    <ClInclude Include="Maximum_Difference.h" />
-    <ClInclude Include="Mean_Square_Error.h" />
-    <ClInclude Include="Measurer.h" />
-    <ClInclude Include="Median_Modifier.h" />
-    <ClInclude Include="Modifier.h" />
-    <ClInclude Include="Negative_Modifier.h" />
-    <ClInclude Include="Noise_Maker.h" />
-    <ClInclude Include="Peak_Mean_Square_Error.h" />
-    <ClInclude Include="Peak_Signal_To_Noise_Ratio.h" />
-    <ClInclude Include="Rotation_Modifier.h" />
-    <ClInclude Include="Shrinking_Modifier.h" />
-    <ClInclude Include="Signal_To_Noise_Ratio.h" />
+    <ClInclude Include="Measurers\Maximum_Difference.h" />
+    <ClInclude Include="Measurers\Mean_Square_Error.h" />
+    <ClInclude Include="Measurers\Measurer.h" />
+    <ClInclude Include="Measurers\Peak_Mean_Square_Error.h" />
+    <ClInclude Include="Measurers\Peak_Signal_To_Noise_Ratio.h" />
+    <ClInclude Include="Measurers\Signal_To_Noise_Ratio.h" />
+    <ClInclude Include="Modifiers\Alpha_Trimmed_Modifier.h" />
+    <ClInclude Include="Modifiers\Brightness_Modifier.h" />
+    <ClInclude Include="Modifiers\Contrast_Modifier.h" />
+    <ClInclude Include="Modifiers\Enlargement_Modifier.h" />
+    <ClInclude Include="Modifiers\Geometric_Mean_Modifier.h" />
+    <ClInclude Include="Modifiers\Median_Modifier.h" />
+    <ClInclude Include="Modifiers\Modifier.h" />
+    <ClInclude Include="Modifiers\Negative_Modifier.h" />
+    <ClInclude Include="Modifiers\Noise_Maker.h" />
+    <ClInclude Include="Modifiers\Rotation_Modifier.h" />
+    <ClInclude Include="Modifiers\Shrinking_Modifier.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

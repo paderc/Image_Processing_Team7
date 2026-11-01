@@ -15,118 +15,138 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Task1.cpp">
+    <ClCompile Include="Main.cpp">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
-    <ClCompile Include="Brightness_Modifier.cpp">
+    <ClCompile Include="Histograms\Histogram.cpp">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
-    <ClCompile Include="Negative_Modifier.cpp">
+    <ClCompile Include="Measurers\Maximum_Difference.cpp">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
-    <ClCompile Include="Contrast_Modifier.cpp">
+    <ClCompile Include="Measurers\Mean_Square_Error.cpp">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
-    <ClCompile Include="Modifier.cpp">
+    <ClCompile Include="Measurers\Measurer.cpp">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
-    <ClCompile Include="Rotation_Modifier.cpp">
+    <ClCompile Include="Measurers\Noise_Maker.cpp">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
-    <ClCompile Include="Geometric_Mean_Modifier.cpp">
+    <ClCompile Include="Measurers\Peak_Mean_Square_Error.cpp">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
-    <ClCompile Include="Median_Modifier.cpp">
+    <ClCompile Include="Measurers\Peak_Signal_To_Noise_Ratio.cpp">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
-    <ClCompile Include="Shrinking_Modifier.cpp">
+    <ClCompile Include="Measurers\Signal_To_Noise_Ratio.cpp">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
-    <ClCompile Include="Mean_Square_Error.cpp">
+    <ClCompile Include="Modifiers\Alpha_Trimmed_Modifier.cpp">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
-    <ClCompile Include="Measurer.cpp">
+    <ClCompile Include="Modifiers\Brightness_Modifier.cpp">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
-    <ClCompile Include="Peak_Mean_Square_Error.cpp">
+    <ClCompile Include="Modifiers\Contrast_Modifier.cpp">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
-    <ClCompile Include="Signal_To_Noise_Ratio.cpp">
+    <ClCompile Include="Modifiers\Enlargement_Modifier.cpp">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
-    <ClCompile Include="Peak_Signal_To_Noise_Ratio.cpp">
+    <ClCompile Include="Modifiers\Geometric_Mean_Modifier.cpp">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
-    <ClCompile Include="Maximum_Difference.cpp">
+    <ClCompile Include="Modifiers\Median_Modifier.cpp">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
-    <ClCompile Include="Enlargement_Modifier.cpp">
+    <ClCompile Include="Modifiers\Modifier.cpp">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
-    <ClCompile Include="Alpha_Trimmed_Modifier.cpp">
+    <ClCompile Include="Modifiers\Negative_Modifier.cpp">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
-    <ClCompile Include="Noise_Maker.cpp">
+    <ClCompile Include="Modifiers\Rotation_Modifier.cpp">
+      <Filter>Pliki źródłowe</Filter>
+    </ClCompile>
+    <ClCompile Include="Modifiers\Shrinking_Modifier.cpp">
+      <Filter>Pliki źródłowe</Filter>
+    </ClCompile>
+    <ClCompile Include="Histograms\Histogram_Data.cpp">
+      <Filter>Pliki źródłowe</Filter>
+    </ClCompile>
+    <ClCompile Include="Modifiers\Noise_Maker.cpp">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Brightness_Modifier.h">
+    <ClInclude Include="Info.h">
       <Filter>Pliki nagłówkowe</Filter>
     </ClInclude>
     <ClInclude Include="CImg.h">
       <Filter>Pliki nagłówkowe</Filter>
     </ClInclude>
-    <ClInclude Include="Negative_Modifier.h">
+    <ClInclude Include="Histograms\Histogram.h">
       <Filter>Pliki nagłówkowe</Filter>
     </ClInclude>
-    <ClInclude Include="Contrast_Modifier.h">
+    <ClInclude Include="Measurers\Maximum_Difference.h">
       <Filter>Pliki nagłówkowe</Filter>
     </ClInclude>
-    <ClInclude Include="Modifier.h">
+    <ClInclude Include="Measurers\Mean_Square_Error.h">
       <Filter>Pliki nagłówkowe</Filter>
     </ClInclude>
-    <ClInclude Include="Rotation_Modifier.h">
+    <ClInclude Include="Measurers\Measurer.h">
       <Filter>Pliki nagłówkowe</Filter>
     </ClInclude>
-    <ClInclude Include="Geometric_Mean_Modifier.h">
+    <ClInclude Include="Measurers\Peak_Mean_Square_Error.h">
       <Filter>Pliki nagłówkowe</Filter>
     </ClInclude>
-    <ClInclude Include="Median_Modifier.h">
+    <ClInclude Include="Measurers\Peak_Signal_To_Noise_Ratio.h">
       <Filter>Pliki nagłówkowe</Filter>
     </ClInclude>
-    <ClInclude Include="Shrinking_Modifier.h">
+    <ClInclude Include="Measurers\Signal_To_Noise_Ratio.h">
       <Filter>Pliki nagłówkowe</Filter>
     </ClInclude>
-    <ClInclude Include="Mean_Square_Error.h">
+    <ClInclude Include="Histograms\Histogram_Data.h">
       <Filter>Pliki nagłówkowe</Filter>
     </ClInclude>
-    <ClInclude Include="Measurer.h">
+    <ClInclude Include="Modifiers\Alpha_Trimmed_Modifier.h">
       <Filter>Pliki nagłówkowe</Filter>
     </ClInclude>
-    <ClInclude Include="Peak_Mean_Square_Error.h">
+    <ClInclude Include="Modifiers\Brightness_Modifier.h">
       <Filter>Pliki nagłówkowe</Filter>
     </ClInclude>
-    <ClInclude Include="Signal_To_Noise_Ratio.h">
+    <ClInclude Include="Modifiers\Contrast_Modifier.h">
       <Filter>Pliki nagłówkowe</Filter>
     </ClInclude>
-    <ClInclude Include="Peak_Signal_To_Noise_Ratio.h">
+    <ClInclude Include="Modifiers\Enlargement_Modifier.h">
       <Filter>Pliki nagłówkowe</Filter>
     </ClInclude>
-    <ClInclude Include="Maximum_Difference.h">
+    <ClInclude Include="Modifiers\Geometric_Mean_Modifier.h">
       <Filter>Pliki nagłówkowe</Filter>
     </ClInclude>
-    <ClInclude Include="Info.h">
+    <ClInclude Include="Modifiers\Median_Modifier.h">
       <Filter>Pliki nagłówkowe</Filter>
     </ClInclude>
-    <ClInclude Include="Enlargement_Modifier.h">
+    <ClInclude Include="Modifiers\Modifier.h">
       <Filter>Pliki nagłówkowe</Filter>
     </ClInclude>
-    <ClInclude Include="Alpha_Trimmed_Modifier.h">
+    <ClInclude Include="Modifiers\Negative_Modifier.h">
       <Filter>Pliki nagłówkowe</Filter>
     </ClInclude>
-    <ClInclude Include="Noise_Maker.h">
+    <ClInclude Include="Modifiers\Noise_Maker.h">
       <Filter>Pliki nagłówkowe</Filter>
     </ClInclude>
+    <ClInclude Include="Modifiers\Rotation_Modifier.h">
+      <Filter>Pliki nagłówkowe</Filter>
+    </ClInclude>
+    <ClInclude Include="Modifiers\Shrinking_Modifier.h">
+      <Filter>Pliki nagłówkowe</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="monkey.bmp">
+      <Filter>Pliki zasobów</Filter>
+    </Image>
   </ItemGroup>
 </Project>

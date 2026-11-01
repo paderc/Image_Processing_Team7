@@ -10,6 +10,8 @@ constexpr const char* Reset = "\033[0m";
 constexpr const char* Red = "\033[31m";
 constexpr const char* Green = "\033[32m";
 
+#include "Histograms/Histogram_Data.h"
+
 void print_help_for(Modifier_Info cmd)
 {
 	cout << Red << "Use " << cmd.name << " " << cmd.details << Reset << endl;
@@ -35,6 +37,11 @@ void print_help() {
 	cout << Green << "---" << Reset << endl;
 }
 void handle_args(int argc, char* argv[]) {
+
+	CImg<unsigned char> image("monkey.bmp");
+	Intensity_Data data(image);
+	data.makeGraph(800, 600, true);
+	return;
 	//Base command amount -> program, command
 	unsigned short base_amt = 2;
 	if (argc > 1) {
