@@ -1,7 +1,7 @@
-(H4) Power 2/3 final probability density function (--hpower).
+~~(H4) Power 2/3 final probability density function (--hpower).~~
 
-(C1) Mean (--cmean). Variance (--cvariance).
-(C2) Standard deviation (--cstdev). Variation coefficient I (--cvarcoi).
+~~(C1) Mean (--cmean). Variance (--cvariance).~~(
+~~(C2) Standard deviation (--cstdev). Variation coefficient I (--cvarcoi).~~
 (C3) Asymmetry coefficient (--casyco).
 (C4) Flattening coefficient (--cflaco).
 (C5) Variation coefficient II (--cvarcoii).

@@ -1,7 +1,7 @@
 #include "Peak_Mean_Square_Error.h"
 #include <limits>
 
-void Peak_Mean_Square_Error::measure_inherited() {
+void Peak_Mean_Square_Error::compare_inherited() {
 	const double noise = squared_error_sum();
 	const double peak = reference_peak();
 

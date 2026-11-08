@@ -4,7 +4,7 @@
 
 using namespace cimg_library;
 
-void Maximum_Difference::measure_inherited() {
+void Maximum_Difference::compare_inherited() {
     const auto* a = image1.data();
     const auto* b = image2.data();
     const auto count = image1.size();

@@ -13,6 +13,9 @@ string Modifier::describe() {
 }
 
 void Modifier::modify(bool timer, bool verbose) {
+	if (verbose) {
+		cout << describe() << endl;
+	}
 	chrono::steady_clock::time_point start = chrono::steady_clock::now();
 	
 	modify_inherited();
@@ -22,7 +25,5 @@ void Modifier::modify(bool timer, bool verbose) {
 		double ms = chrono::duration<double, milli>(end - start).count();
 		cout << "Modification took " << ms << " ms\n";
 	}
-	if (verbose) {
-		cout << describe() << endl;
-	}
+	
 }

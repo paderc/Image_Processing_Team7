@@ -5,6 +5,7 @@
 
 #include "CImg.h"
 #include "Modifiers/Modifier.h"
+#include "Comparators/Comparator.h"
 #include "Measurers/Measurer.h"
 
 
@@ -18,12 +19,18 @@
 #include "Modifiers/Alpha_Trimmed_Modifier.h"
 #include "Modifiers/Enlargement_Modifier.h"
 #include "Modifiers/Noise_Maker.h"
+#include "Modifiers/PowerTwoThird.h"
 
-#include "Measurers/Mean_Square_Error.h"
-#include "Measurers/Peak_Mean_Square_Error.h"
-#include "Measurers/Signal_To_Noise_Ratio.h"
-#include "Measurers/Peak_Signal_To_Noise_Ratio.h"
-#include "Measurers/Maximum_Difference.h"
+#include "Comparators/Mean_Square_Error.h"
+#include "Comparators/Peak_Mean_Square_Error.h"
+#include "Comparators/Signal_To_Noise_Ratio.h"
+#include "Comparators/Peak_Signal_To_Noise_Ratio.h"
+#include "Comparators/Maximum_Difference.h"
+
+#include "Measurers/Variation_Coefficient_I.h"
+#include "Measurers/Standard_Deviation.h"
+#include "Measurers/Mean_Measure.h"
+#include "Measurers/Variance.h"
 
 using namespace std;
 using namespace cimg_library;
@@ -37,25 +44,29 @@ shared_ptr<Modifier> make_modifier(char* argv[]) {
 }
 
 template <class T>
+shared_ptr<Comparator> make_comparator(char* argv[]) {
+    return make_shared<T>(argv);
+}
+
+template <class T>
 shared_ptr<Measurer> make_measurer(char* argv[]) {
     return make_shared<T>(argv);
 }
 
-struct Modifier_Info {
-    unsigned short required_commands;
-    string_view name;
-    string_view details;
-    string_view description;
-    factory<Modifier> factory;
+template <class T>
+struct Command_Info {
+	unsigned short required_commands;
+	string_view name;
+	string_view details;
+	string_view description;
+	factory<T> factory;
 };
 
-struct Measurer_Info {
-    unsigned short required_commands;
-    string_view name;
-    string_view details;
-    string_view description;
-    factory<Measurer> factory;
-};
+struct Modifier_Info : Command_Info<Modifier>{};
+
+struct Comparator_Info : Command_Info<Comparator>{};
+
+struct Measurer_Info : Command_Info<Measurer> {};
 
 inline constexpr Modifier_Info Brightness_Info{
     2,
@@ -138,40 +149,40 @@ inline constexpr Modifier_Info Noise_Maker_Modifier_Info{
     &make_modifier<Noise_Maker>
 };
 
-inline constexpr Measurer_Info Mean_Square_Error_Info{
+inline constexpr Comparator_Info Mean_Square_Error_Info{
     2,
     "--mse",
     "[filename 1] [filename 2]",
     "Compares noise with mean square error method",
-    &make_measurer<Mean_Square_Error>
+    &make_comparator<Mean_Square_Error>
 };
-inline constexpr Measurer_Info Peak_Mean_Square_Error_Info{
+inline constexpr Comparator_Info Peak_Mean_Square_Error_Info{
     2,
     "--pmse",
     "[filename 1] [filename 2]",
     "Compares noise with peak mean square error method",
-    &make_measurer<Peak_Mean_Square_Error>
+    &make_comparator<Peak_Mean_Square_Error>
 };
-inline constexpr Measurer_Info Signal_To_Noise_Ratio_Info{
+inline constexpr Comparator_Info Signal_To_Noise_Ratio_Info{
     2,
     "--snr",
     "[filename 1] [filename 2]",
     "Compares noise with signal to noise ratio method",
-    &make_measurer<Signal_To_Noise_Ratio>
+    &make_comparator<Signal_To_Noise_Ratio>
 };
-inline constexpr Measurer_Info Peak_Signal_To_Noise_Ratio_Info{
+inline constexpr Comparator_Info Peak_Signal_To_Noise_Ratio_Info{
     2,
     "--psnr",
     "[filename 1] [filename 2]",
     "Compares noise with peak signal to noise ratio method",
-    &make_measurer<Peak_Signal_To_Noise_Ratio>
+    &make_comparator<Peak_Signal_To_Noise_Ratio>
 };
-inline constexpr Measurer_Info Maximum_Difference_Info{
+inline constexpr Comparator_Info Maximum_Difference_Info{
     2,
     "--md",
     "[filename 1] [filename 2]",
     "Compares noise with maximum difference method",
-    &make_measurer<Maximum_Difference>
+    &make_comparator<Maximum_Difference>
 };
 inline constexpr Modifier_Info Enlargement_Info{
     2,
@@ -180,6 +191,43 @@ inline constexpr Modifier_Info Enlargement_Info{
     "Enlarges the image using nearest-neighbor sampling",
     &make_modifier<Enlargement_Modifier>
 };
+inline constexpr Modifier_Info PowerTwoThird_Info{
+	3,
+	"--hpower",
+	"[filename] [g_min] [g_max]",
+	"Applies power two-thirds modification to the image, with specified g_min and g_max values",
+	&make_modifier<PowerTwoThird>
+};
+
+inline constexpr Measurer_Info Mean_Measure_Info{
+	1,
+	"--cmean",
+	"[filename]",
+	"Calculates the mean intensity of the image",
+	&make_measurer<Mean_Measure>
+};
+inline constexpr Measurer_Info Variation_Coefficient_I_Info{
+	1,
+	"--cvariance",
+	"[filename]",
+	"Calculates the variation coefficient I of the image",
+	&make_measurer<Variation_Coefficient_I>
+};
+inline constexpr Measurer_Info Standard_Deviation_Info{
+	1,
+	"--cstdev",
+	"[filename]",
+	"Calculates the standard deviation of the image",
+	&make_measurer<Standard_Deviation>
+};
+inline constexpr Measurer_Info Variance_Info{
+	1,
+	"--cvarcoi",
+	"[filename]",
+	"Calculates the variance of the image",
+	&make_measurer<Variance>
+};
+
 
 inline constexpr array ALL_MODIFIERS{
     Brightness_Info,
@@ -193,12 +241,19 @@ inline constexpr array ALL_MODIFIERS{
     DiagonalFlip_Info,
     Alpha_Trimmed_Modifier_Info,
     Enlargement_Info,
-    Noise_Maker_Modifier_Info
+    Noise_Maker_Modifier_Info,
+	PowerTwoThird_Info
 };
-inline constexpr array ALL_MEASURERS{
+inline constexpr array ALL_COMPARATORS{
     Mean_Square_Error_Info,
     Peak_Mean_Square_Error_Info,
     Signal_To_Noise_Ratio_Info,
     Peak_Signal_To_Noise_Ratio_Info,
     Maximum_Difference_Info
+};
+inline constexpr array ALL_MEASURERS{
+	Mean_Measure_Info,
+	Variance_Info,
+	Standard_Deviation_Info,
+	Variation_Coefficient_I_Info
 };

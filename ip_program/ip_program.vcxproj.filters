@@ -21,25 +21,22 @@
     <ClCompile Include="Histograms\Histogram.cpp">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
-    <ClCompile Include="Measurers\Maximum_Difference.cpp">
+    <ClCompile Include="Comparators\Maximum_Difference.cpp">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
-    <ClCompile Include="Measurers\Mean_Square_Error.cpp">
+    <ClCompile Include="Comparators\Mean_Square_Error.cpp">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
-    <ClCompile Include="Measurers\Measurer.cpp">
+    <ClCompile Include="Comparators\Comparator.cpp">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
-    <ClCompile Include="Measurers\Noise_Maker.cpp">
+    <ClCompile Include="Comparators\Peak_Mean_Square_Error.cpp">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
-    <ClCompile Include="Measurers\Peak_Mean_Square_Error.cpp">
+    <ClCompile Include="Comparators\Peak_Signal_To_Noise_Ratio.cpp">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
-    <ClCompile Include="Measurers\Peak_Signal_To_Noise_Ratio.cpp">
-      <Filter>Pliki źródłowe</Filter>
-    </ClCompile>
-    <ClCompile Include="Measurers\Signal_To_Noise_Ratio.cpp">
+    <ClCompile Include="Comparators\Signal_To_Noise_Ratio.cpp">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
     <ClCompile Include="Modifiers\Alpha_Trimmed_Modifier.cpp">
@@ -78,6 +75,24 @@
     <ClCompile Include="Modifiers\Noise_Maker.cpp">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
+    <ClCompile Include="Modifiers\PowerTwoThird.cpp">
+      <Filter>Pliki źródłowe</Filter>
+    </ClCompile>
+    <ClCompile Include="Measurers\Measurer.cpp">
+      <Filter>Pliki źródłowe</Filter>
+    </ClCompile>
+    <ClCompile Include="Measurers\Mean_Measure.cpp">
+      <Filter>Pliki źródłowe</Filter>
+    </ClCompile>
+    <ClCompile Include="Measurers\Variance.cpp">
+      <Filter>Pliki źródłowe</Filter>
+    </ClCompile>
+    <ClCompile Include="Measurers\Standard_Deviation.cpp">
+      <Filter>Pliki źródłowe</Filter>
+    </ClCompile>
+    <ClCompile Include="Measurers\Variation_Coefficient_I.cpp">
+      <Filter>Pliki źródłowe</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Info.h">
@@ -89,22 +104,22 @@
     <ClInclude Include="Histograms\Histogram.h">
       <Filter>Pliki nagłówkowe</Filter>
     </ClInclude>
-    <ClInclude Include="Measurers\Maximum_Difference.h">
+    <ClInclude Include="Comparators\Maximum_Difference.h">
       <Filter>Pliki nagłówkowe</Filter>
     </ClInclude>
-    <ClInclude Include="Measurers\Mean_Square_Error.h">
+    <ClInclude Include="Comparators\Mean_Square_Error.h">
       <Filter>Pliki nagłówkowe</Filter>
     </ClInclude>
-    <ClInclude Include="Measurers\Measurer.h">
+    <ClInclude Include="Comparators\Comparator.h">
       <Filter>Pliki nagłówkowe</Filter>
     </ClInclude>
-    <ClInclude Include="Measurers\Peak_Mean_Square_Error.h">
+    <ClInclude Include="Comparators\Peak_Mean_Square_Error.h">
       <Filter>Pliki nagłówkowe</Filter>
     </ClInclude>
-    <ClInclude Include="Measurers\Peak_Signal_To_Noise_Ratio.h">
+    <ClInclude Include="Comparators\Peak_Signal_To_Noise_Ratio.h">
       <Filter>Pliki nagłówkowe</Filter>
     </ClInclude>
-    <ClInclude Include="Measurers\Signal_To_Noise_Ratio.h">
+    <ClInclude Include="Comparators\Signal_To_Noise_Ratio.h">
       <Filter>Pliki nagłówkowe</Filter>
     </ClInclude>
     <ClInclude Include="Histograms\Histogram_Data.h">
@@ -141,6 +156,24 @@
       <Filter>Pliki nagłówkowe</Filter>
     </ClInclude>
     <ClInclude Include="Modifiers\Shrinking_Modifier.h">
+      <Filter>Pliki nagłówkowe</Filter>
+    </ClInclude>
+    <ClInclude Include="Modifiers\PowerTwoThird.h">
+      <Filter>Pliki nagłówkowe</Filter>
+    </ClInclude>
+    <ClInclude Include="Measurers\Measurer.h">
+      <Filter>Pliki nagłówkowe</Filter>
+    </ClInclude>
+    <ClInclude Include="Measurers\Mean_Measure.h">
+      <Filter>Pliki nagłówkowe</Filter>
+    </ClInclude>
+    <ClInclude Include="Measurers\Variance.h">
+      <Filter>Pliki nagłówkowe</Filter>
+    </ClInclude>
+    <ClInclude Include="Measurers\Standard_Deviation.h">
+      <Filter>Pliki nagłówkowe</Filter>
+    </ClInclude>
+    <ClInclude Include="Measurers\Variation_Coefficient_I.h">
       <Filter>Pliki nagłówkowe</Filter>
     </ClInclude>
   </ItemGroup>

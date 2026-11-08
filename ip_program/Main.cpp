@@ -12,12 +12,8 @@ constexpr const char* Green = "\033[32m";
 
 #include "Histograms/Histogram_Data.h"
 
-void print_help_for(Modifier_Info cmd)
-{
-	cout << Red << "Use " << cmd.name << " " << cmd.details << Reset << endl;
-}
-
-void print_help_for(Measurer_Info cmd)
+template <class T>
+void print_help_for(Command_Info<T> cmd)
 {
 	cout << Red << "Use " << cmd.name << " " << cmd.details << Reset << endl;
 }
@@ -25,23 +21,19 @@ void print_help_for(Measurer_Info cmd)
 void print_unknown_cmd() {
 	cout << "Unknown Command" << endl << "Use --help for commands" << endl;
 }
+ 
 void print_help() {
 	cout << Green << "Available commands" << Reset << endl;
 	cout << Green << "---" << Reset << endl;
 	for (const Modifier_Info& cmd : ALL_MODIFIERS) {
 		cout << cmd.name << "  -  " << cmd.description << endl;
 	}
-	for (const Measurer_Info& cmd : ALL_MEASURERS) {
+	for (const Comparator_Info& cmd : ALL_COMPARATORS) {
 		cout << cmd.name << "  -  " << cmd.description << endl;
 	}
 	cout << Green << "---" << Reset << endl;
 }
 void handle_args(int argc, char* argv[]) {
-
-	CImg<unsigned char> image("monkey.bmp");
-	Intensity_Data data(image);
-	data.makeGraph(800, 600, true);
-	return;
 	//Base command amount -> program, command
 	unsigned short base_amt = 2;
 	if (argc > 1) {
@@ -66,6 +58,20 @@ void handle_args(int argc, char* argv[]) {
 					modifier->modify(timer, verbose);
 
 					modifier->image.save(modifier->filename.c_str());
+					return;
+				}
+				else {
+					print_help_for(cmd);
+					return;
+				}
+			}
+		}
+		for (const Comparator_Info& cmd : ALL_COMPARATORS) {
+			if (command == cmd.name) {
+				if (argc == base_amt + cmd.required_commands + timer + verbose) {
+					auto comparator = cmd.factory(argv);
+
+					comparator->compare(timer, verbose);
 					return;
 				}
 				else {

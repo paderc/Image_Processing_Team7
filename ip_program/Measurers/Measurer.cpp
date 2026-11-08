@@ -1,51 +1,45 @@
+#include "Measurer.h"
+#include "../Histograms/Histogram_Data.h"
+
 #include <chrono>
 #include <iostream>
 
-#include "Measurer.h"
+using namespace std;
+double Measurer::variance() {
+	double variance = 0.0;
+	Intensity_Data intensity_data(image);
+	double mean = this->mean();
+	for (int i = 0; i < intensity_data.occurences.size(); i++) {
+		variance += (i - mean) * (i - mean) * intensity_data.occurences.at(i);
+	}
+	return variance / (image.width() * image.height());
+}
+double Measurer::mean() {
+	Intensity_Data intensity_data(image);
+	double score = 0.0;
+
+	for (int i = 0; i < intensity_data.occurences.size(); i++) {
+		score += i * intensity_data.occurences.at(i);
+	}
+	return score / (image.width() * image.height());
+}
 
 string Measurer::describe() {
-	return string("Measuring error between ").append(filename1).append(" and ").append(filename2);
+	return string("Measuring ").append(filename);
 }
 void Measurer::measure(bool timer, bool verbose) {
+	if (verbose) {
+			cout << describe() << endl;
+	}
 	chrono::steady_clock::time_point start = chrono::steady_clock::now();
-	
-	measure_inherited();
 
+	measure_inherited();
+	
 	if (timer) {
 		chrono::steady_clock::time_point end = chrono::steady_clock::now();
 		double ms = chrono::duration<double, milli>(end - start).count();
-		cout << "Modification took " << ms << " ms\n";
-	}
-	if (verbose) {
-		cout << describe() << endl;
-	}
-	
-	cout << "Error between " << filename1 << " and " << filename2 << " is " << error << unit << endl;
-}
-double Measurer::squared_error_sum() const {
-	const auto* a = image1.data();
-	const auto* b = image2.data();
-	const auto count = image1.size();
-
-	double sum = 0.0;
-
-	for (decltype(image1.size()) i = 0; i < count; ++i) {
-		const int difference = int(a[i]) - int(b[i]);
-		sum += double(difference) * difference;
+		cout << "Measurement took " << ms << " ms\n";
 	}
 
-	return sum;
-}
-double Measurer::reference_peak() const {
-	const auto* values = image1.data();
-	const auto count = image1.size();
-
-	unsigned char peak = 0;
-
-	for (decltype(image1.size()) i = 0; i < count; ++i)
-	{
-		if (values[i] > peak) peak = values[i];
-	}
-
-	return peak;
+	cout << "Score of " << filename << " is " << score << unit << endl;
 }

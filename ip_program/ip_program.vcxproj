@@ -146,13 +146,14 @@
     <ClCompile Include="Histograms\Histogram_Data.cpp" />
     <ClCompile Include="Histograms\Histogram.cpp" />
     <ClCompile Include="Main.cpp" />
-    <ClCompile Include="Measurers\Maximum_Difference.cpp" />
-    <ClCompile Include="Measurers\Mean_Square_Error.cpp" />
+    <ClCompile Include="Comparators\Maximum_Difference.cpp" />
+    <ClCompile Include="Comparators\Mean_Square_Error.cpp" />
+    <ClCompile Include="Comparators\Comparator.cpp" />
+    <ClCompile Include="Comparators\Peak_Mean_Square_Error.cpp" />
+    <ClCompile Include="Comparators\Peak_Signal_To_Noise_Ratio.cpp" />
+    <ClCompile Include="Comparators\Signal_To_Noise_Ratio.cpp" />
+    <ClCompile Include="Measurers\Mean_Measure.cpp" />
     <ClCompile Include="Measurers\Measurer.cpp" />
-    <ClCompile Include="Measurers\Noise_Maker.cpp" />
-    <ClCompile Include="Measurers\Peak_Mean_Square_Error.cpp" />
-    <ClCompile Include="Measurers\Peak_Signal_To_Noise_Ratio.cpp" />
-    <ClCompile Include="Measurers\Signal_To_Noise_Ratio.cpp" />
     <ClCompile Include="Modifiers\Alpha_Trimmed_Modifier.cpp" />
     <ClCompile Include="Modifiers\Brightness_Modifier.cpp" />
     <ClCompile Include="Modifiers\Contrast_Modifier.cpp" />
@@ -164,18 +165,24 @@
     <ClCompile Include="Modifiers\Noise_Maker.cpp" />
     <ClCompile Include="Modifiers\Rotation_Modifier.cpp" />
     <ClCompile Include="Modifiers\Shrinking_Modifier.cpp" />
+    <ClCompile Include="Modifiers\PowerTwoThird.cpp" />
+    <ClCompile Include="Measurers\Variance.cpp" />
+    <ClCompile Include="Measurers\Standard_Deviation.cpp" />
+    <ClCompile Include="Measurers\Variation_Coefficient_I.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CImg.h" />
     <ClInclude Include="Histograms\Histogram_Data.h" />
     <ClInclude Include="Histograms\Histogram.h" />
     <ClInclude Include="Info.h" />
-    <ClInclude Include="Measurers\Maximum_Difference.h" />
-    <ClInclude Include="Measurers\Mean_Square_Error.h" />
+    <ClInclude Include="Comparators\Maximum_Difference.h" />
+    <ClInclude Include="Comparators\Mean_Square_Error.h" />
+    <ClInclude Include="Comparators\Comparator.h" />
+    <ClInclude Include="Comparators\Peak_Mean_Square_Error.h" />
+    <ClInclude Include="Comparators\Peak_Signal_To_Noise_Ratio.h" />
+    <ClInclude Include="Comparators\Signal_To_Noise_Ratio.h" />
+    <ClInclude Include="Measurers\Mean_Measure.h" />
     <ClInclude Include="Measurers\Measurer.h" />
-    <ClInclude Include="Measurers\Peak_Mean_Square_Error.h" />
-    <ClInclude Include="Measurers\Peak_Signal_To_Noise_Ratio.h" />
-    <ClInclude Include="Measurers\Signal_To_Noise_Ratio.h" />
     <ClInclude Include="Modifiers\Alpha_Trimmed_Modifier.h" />
     <ClInclude Include="Modifiers\Brightness_Modifier.h" />
     <ClInclude Include="Modifiers\Contrast_Modifier.h" />
@@ -187,6 +194,10 @@
     <ClInclude Include="Modifiers\Noise_Maker.h" />
     <ClInclude Include="Modifiers\Rotation_Modifier.h" />
     <ClInclude Include="Modifiers\Shrinking_Modifier.h" />
+    <ClInclude Include="Modifiers\PowerTwoThird.h" />
+    <ClInclude Include="Measurers\Variance.h" />
+    <ClInclude Include="Measurers\Standard_Deviation.h" />
+    <ClInclude Include="Measurers\Variation_Coefficient_I.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

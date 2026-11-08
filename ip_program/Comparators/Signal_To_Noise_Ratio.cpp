@@ -2,7 +2,7 @@
 #include <cmath>
 #include <limits>
 
-void Signal_To_Noise_Ratio::measure_inherited() {
+void Signal_To_Noise_Ratio::compare_inherited() {
     const auto* a = image1.data();
     const auto* b = image2.data();
     const auto count = image1.size();
