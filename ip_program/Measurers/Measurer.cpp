@@ -1,25 +1,22 @@
 #include "Measurer.h"
-#include "../Histograms/Histogram_Data.h"
 
 #include <chrono>
 #include <iostream>
 
 using namespace std;
-double Measurer::variance() {
+double Measurer::variance(Intensity_Data data) {
 	double variance = 0.0;
-	Intensity_Data intensity_data(image);
-	double mean = this->mean();
-	for (int i = 0; i < intensity_data.occurences.size(); i++) {
-		variance += (i - mean) * (i - mean) * intensity_data.occurences.at(i);
+	double mean = this->mean(data);
+	for (int i = 0; i < data.occurences.size(); i++) {
+		variance += (i - mean) * (i - mean) * data.occurences.at(i);
 	}
 	return variance / (image.width() * image.height());
 }
-double Measurer::mean() {
-	Intensity_Data intensity_data(image);
+double Measurer::mean(Intensity_Data data) {
 	double score = 0.0;
 
-	for (int i = 0; i < intensity_data.occurences.size(); i++) {
-		score += i * intensity_data.occurences.at(i);
+	for (int i = 0; i < data.occurences.size(); i++) {
+		score += i * data.occurences.at(i);
 	}
 	return score / (image.width() * image.height());
 }

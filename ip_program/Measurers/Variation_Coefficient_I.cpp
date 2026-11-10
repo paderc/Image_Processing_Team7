@@ -2,5 +2,6 @@
 #include "../Histograms/Histogram_Data.h"
 
 void Variation_Coefficient_I::measure_inherited() {
-	score = std_dev / mean();
+	Intensity_Data data(image);
+	score = sqrt(variance(data)) / mean(data);
 }

@@ -2,5 +2,6 @@
 #include "../Histograms/Histogram_Data.h"
 
 void Mean_Measure::measure_inherited() {
-	score = mean();
+	Intensity_Data data(image);
+	score = mean(data);
 }

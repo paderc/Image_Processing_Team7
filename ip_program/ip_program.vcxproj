@@ -143,6 +143,7 @@
     <Image Include="monkey.bmp" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Measurers\Asymmetry_Coefficient.cpp" />
     <ClCompile Include="Histograms\Histogram_Data.cpp" />
     <ClCompile Include="Histograms\Histogram.cpp" />
     <ClCompile Include="Main.cpp" />
@@ -171,6 +172,7 @@
     <ClCompile Include="Measurers\Variation_Coefficient_I.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Measurers\Asymmetry_Coefficient.h" />
     <ClInclude Include="CImg.h" />
     <ClInclude Include="Histograms\Histogram_Data.h" />
     <ClInclude Include="Histograms\Histogram.h" />

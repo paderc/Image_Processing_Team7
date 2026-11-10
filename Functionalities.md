@@ -2,7 +2,7 @@
 
 ~~(C1) Mean (--cmean). Variance (--cvariance).~~(
 ~~(C2) Standard deviation (--cstdev). Variation coefficient I (--cvarcoi).~~
-(C3) Asymmetry coefficient (--casyco).
+~~(C3) Asymmetry coefficient (--casyco).~~
 (C4) Flattening coefficient (--cflaco).
 (C5) Variation coefficient II (--cvarcoii).
 (C6) Information source entropy (--centropy).

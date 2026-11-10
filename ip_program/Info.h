@@ -31,6 +31,7 @@
 #include "Measurers/Standard_Deviation.h"
 #include "Measurers/Mean_Measure.h"
 #include "Measurers/Variance.h"
+#include "Measurers/Asymmetry_Coefficient.h"
 
 using namespace std;
 using namespace cimg_library;
@@ -227,7 +228,13 @@ inline constexpr Measurer_Info Variance_Info{
 	"Calculates the variance of the image",
 	&make_measurer<Variance>
 };
-
+inline constexpr Measurer_Info Asymmetry_Coefficient_Info{
+	1,
+	"--casyco",
+	"[filename]",
+	"Calculates the asymmetry coefficient of the image",
+	&make_measurer<Asymmetry_Coefficient>
+};
 
 inline constexpr array ALL_MODIFIERS{
     Brightness_Info,
@@ -255,5 +262,6 @@ inline constexpr array ALL_MEASURERS{
 	Mean_Measure_Info,
 	Variance_Info,
 	Standard_Deviation_Info,
-	Variation_Coefficient_I_Info
+	Variation_Coefficient_I_Info,
+	Asymmetry_Coefficient_Info
 };

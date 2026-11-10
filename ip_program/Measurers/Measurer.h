@@ -2,6 +2,7 @@
 #include <string>
 #include <iostream>
 
+#include "../Histograms/Histogram_Data.h"
 #include "../CImg.h"
 
 using namespace cimg_library;
@@ -14,8 +15,8 @@ protected:
 	virtual string describe();
 	int width;
 	int height;
-	double mean();
-	double variance();
+	double mean(Intensity_Data data);
+	double variance(Intensity_Data data);
 	CImg<unsigned char> image;
 public:
 	Measurer(char* argv[]) : image(), filename(argv[2]) {

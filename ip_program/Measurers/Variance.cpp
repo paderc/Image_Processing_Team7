@@ -2,5 +2,6 @@
 #include "../Histograms/Histogram_Data.h"
 
 void Variance::measure_inherited() {
-	score = variance();
+	Intensity_Data data(image);
+	score = variance(data);
 }
