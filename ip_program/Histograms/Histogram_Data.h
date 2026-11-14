@@ -1,5 +1,6 @@
 #pragma once
 #include "../CImg.h"
+#include <limits>
 #include <vector>
 
 using namespace std;
@@ -14,15 +15,15 @@ public:
 	virtual ~Histogram_Data() = default;
 protected:
 	virtual void fill_data() = 0;
-	CImg<unsigned char> &image;
+	CImg<unsigned char>& image;
 	size_t max_value;
 };
 
 class Divided_Data : public Histogram_Data {
 public:
-	Divided_Data(CImg<unsigned char>& _image) : Histogram_Data(_image){
+	Divided_Data(CImg<unsigned char>& _image) : Histogram_Data(_image) {
 		spectrum_occurences.resize(max_value + 1);
-		for (int i = 0; i < max_value + 1; i++) {
+		for (size_t i = 0; i < max_value + 1; i++) {
 			spectrum_occurences.at(i).resize(image.spectrum());
 		}
 		fill_data();
