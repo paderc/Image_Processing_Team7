@@ -8,7 +8,6 @@
 #include "Comparators/Comparator.h"
 #include "Measurers/Measurer.h"
 
-
 #include "Modifiers/Brightness_Modifier.h"
 #include "Modifiers/Contrast_Modifier.h"
 #include "Modifiers/Negative_Modifier.h"
@@ -20,6 +19,8 @@
 #include "Modifiers/Enlargement_Modifier.h"
 #include "Modifiers/Noise_Maker.h"
 #include "Modifiers/PowerTwoThird.h"
+#include "Modifiers/Extraction_Details_I.h"
+#include "Modifiers/Roberts_II_Modifier.h"
 
 #include "Comparators/Mean_Square_Error.h"
 #include "Comparators/Peak_Mean_Square_Error.h"
@@ -32,12 +33,15 @@
 #include "Measurers/Mean_Measure.h"
 #include "Measurers/Variance.h"
 #include "Measurers/Asymmetry_Coefficient.h"
+#include "Measurers/Flattening_Coefficient.h"
+#include "Measurers/Variation_Coefficient_II.h"
+#include "Measurers/Information_Source_Entropy.h"
 
 using namespace std;
 using namespace cimg_library;
 
 template <class T>
-using factory = shared_ptr<T>(*)(char* argv[]);
+using command_factory = shared_ptr<T>(*)(char* argv[]);
 
 template <class T>
 shared_ptr<Modifier> make_modifier(char* argv[]) {
@@ -60,7 +64,7 @@ struct Command_Info {
 	string_view name;
 	string_view details;
 	string_view description;
-	factory<T> factory;
+	command_factory<T> factory;
 };
 
 struct Modifier_Info : Command_Info<Modifier>{};
@@ -111,7 +115,6 @@ inline constexpr Modifier_Info Geometric_Mean_Info{
     "Applies a geometric mean filter to image, according to given width(0 to 13) and height(0 to 13) of filter rectangle",
     &make_modifier<Geometric_Mean_Modifier>
 };
-
 inline constexpr Modifier_Info HorizontalFlip_Info{
     1,
     "--hflip",
@@ -119,7 +122,6 @@ inline constexpr Modifier_Info HorizontalFlip_Info{
     "Flips the image horizontally",
     &make_modifier<Rotation_Modifier>
 };
-
 inline constexpr Modifier_Info VerticalFlip_Info{
     1,
     "--vflip",
@@ -127,7 +129,6 @@ inline constexpr Modifier_Info VerticalFlip_Info{
     "Flips the image vertically",
     &make_modifier<Rotation_Modifier>
 };
-
 inline constexpr Modifier_Info DiagonalFlip_Info{
     1,
     "--dflip",
@@ -148,6 +149,34 @@ inline constexpr Modifier_Info Noise_Maker_Modifier_Info{
     "[filename] [harshness (0 to 10)]",
     "Adds noise to the image, according to the specified harshness level",
     &make_modifier<Noise_Maker>
+};
+inline constexpr Modifier_Info Enlargement_Info{
+    2,
+    "--enlarge",
+    "[filename] [factor >= 1]",
+    "Enlarges the image using nearest-neighbor sampling",
+    &make_modifier<Enlargement_Modifier>
+};
+inline constexpr Modifier_Info PowerTwoThird_Info{
+	3,
+	"--hpower",
+	"[filename] [g_min] [g_max]",
+	"Applies power two-thirds histogram modification with specified g_min and g_max values",
+	&make_modifier<PowerTwoThird>
+};
+inline constexpr Modifier_Info Extraction_Details_I_Info{
+	3,
+	"--sexdeti",
+	"[filename] [N|NE|E|SE] [universal|opt]",
+	"Extracts directional details (N, NE, E, SE) using universal or optimized convolution",
+	&make_modifier<Extraction_Details_I>
+};
+inline constexpr Modifier_Info Roberts_II_Info{
+	1,
+	"--orobertsii",
+	"[filename]",
+	"Applies non-linear Roberts II edge detection operator",
+	&make_modifier<Roberts_II_Modifier>
 };
 
 inline constexpr Comparator_Info Mean_Square_Error_Info{
@@ -185,20 +214,6 @@ inline constexpr Comparator_Info Maximum_Difference_Info{
     "Compares noise with maximum difference method",
     &make_comparator<Maximum_Difference>
 };
-inline constexpr Modifier_Info Enlargement_Info{
-    2,
-    "--enlarge",
-    "[filename] [factor >= 1]",
-    "Enlarges the image using nearest-neighbor sampling",
-    &make_modifier<Enlargement_Modifier>
-};
-inline constexpr Modifier_Info PowerTwoThird_Info{
-	3,
-	"--hpower",
-	"[filename] [g_min] [g_max]",
-	"Applies power two-thirds modification to the image, with specified g_min and g_max values",
-	&make_modifier<PowerTwoThird>
-};
 
 inline constexpr Measurer_Info Mean_Measure_Info{
 	1,
@@ -207,12 +222,12 @@ inline constexpr Measurer_Info Mean_Measure_Info{
 	"Calculates the mean intensity of the image",
 	&make_measurer<Mean_Measure>
 };
-inline constexpr Measurer_Info Variation_Coefficient_I_Info{
+inline constexpr Measurer_Info Variance_Info{
 	1,
 	"--cvariance",
 	"[filename]",
-	"Calculates the variation coefficient I of the image",
-	&make_measurer<Variation_Coefficient_I>
+	"Calculates the variance of the image",
+	&make_measurer<Variance>
 };
 inline constexpr Measurer_Info Standard_Deviation_Info{
 	1,
@@ -221,12 +236,12 @@ inline constexpr Measurer_Info Standard_Deviation_Info{
 	"Calculates the standard deviation of the image",
 	&make_measurer<Standard_Deviation>
 };
-inline constexpr Measurer_Info Variance_Info{
+inline constexpr Measurer_Info Variation_Coefficient_I_Info{
 	1,
 	"--cvarcoi",
 	"[filename]",
-	"Calculates the variance of the image",
-	&make_measurer<Variance>
+	"Calculates the variation coefficient I of the image",
+	&make_measurer<Variation_Coefficient_I>
 };
 inline constexpr Measurer_Info Asymmetry_Coefficient_Info{
 	1,
@@ -234,6 +249,27 @@ inline constexpr Measurer_Info Asymmetry_Coefficient_Info{
 	"[filename]",
 	"Calculates the asymmetry coefficient of the image",
 	&make_measurer<Asymmetry_Coefficient>
+};
+inline constexpr Measurer_Info Flattening_Coefficient_Info{
+	1,
+	"--cflaco",
+	"[filename]",
+	"Calculates the flattening coefficient (kurtosis) of the image",
+	&make_measurer<Flattening_Coefficient>
+};
+inline constexpr Measurer_Info Variation_Coefficient_II_Info{
+	1,
+	"--cvarcoii",
+	"[filename]",
+	"Calculates the variation coefficient II of the image",
+	&make_measurer<Variation_Coefficient_II>
+};
+inline constexpr Measurer_Info Information_Source_Entropy_Info{
+	1,
+	"--centropy",
+	"[filename]",
+	"Calculates the information source entropy of the image",
+	&make_measurer<Information_Source_Entropy>
 };
 
 inline constexpr array ALL_MODIFIERS{
@@ -249,7 +285,9 @@ inline constexpr array ALL_MODIFIERS{
     Alpha_Trimmed_Modifier_Info,
     Enlargement_Info,
     Noise_Maker_Modifier_Info,
-	PowerTwoThird_Info
+	PowerTwoThird_Info,
+	Extraction_Details_I_Info,
+	Roberts_II_Info
 };
 inline constexpr array ALL_COMPARATORS{
     Mean_Square_Error_Info,
@@ -263,5 +301,8 @@ inline constexpr array ALL_MEASURERS{
 	Variance_Info,
 	Standard_Deviation_Info,
 	Variation_Coefficient_I_Info,
-	Asymmetry_Coefficient_Info
+	Asymmetry_Coefficient_Info,
+	Flattening_Coefficient_Info,
+	Variation_Coefficient_II_Info,
+	Information_Source_Entropy_Info
 };
