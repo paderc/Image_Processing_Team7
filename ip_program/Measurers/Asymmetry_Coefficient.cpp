@@ -1,15 +1,22 @@
 #include "Asymmetry_Coefficient.h"
 #include "../Histograms/Histogram_Data.h"
+#include <cmath>
 
 void Asymmetry_Coefficient::measure_inherited() {
 	Intensity_Data data(image);
 
-	double mean = this->mean(data);
-	double standard_deviation = sqrt(this->variance(data));
-	double sum = 0;
-	
-	for (int i = 0; i < data.occurences.size(); i++) {
-		sum += (pow(i - mean, 3) * data.occurences.at(i));
+	double m = this->mean(data);
+	double standard_deviation = std::sqrt(this->variance(data));
+	const double N = static_cast<double>(image.width()) * static_cast<double>(image.height());
+	if (standard_deviation <= 1e-12 || N <= 0.0) {
+		score = 0.0;
+		return;
 	}
-	score = sum / (image.width() * image.height() * pow(standard_deviation, 3));
+
+	double sum = 0.0;
+	for (int i = 0; i < static_cast<int>(data.occurences.size()); i++) {
+		double diff = static_cast<double>(i) - m;
+		sum += diff * diff * diff * data.occurences.at(i);
+	}
+	score = sum / (N * standard_deviation * standard_deviation * standard_deviation);
 }
