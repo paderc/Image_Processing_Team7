@@ -1,40 +1,38 @@
 #include "PowerTwoThird.h"
 #include "../Histograms/Histogram_Data.h"
+#include <algorithm>
+#include <array>
+#include <cmath>
 
 void PowerTwoThird::modify_inherited() {
-	using pixel_type = decltype(image)::value_type;
+	const int w = image.width();
+	const int h = image.height();
+	const int channels = image.spectrum();
+	const double N = static_cast<double>(w) * static_cast<double>(h);
+	if (N <= 0.0) return;
 
-	size_t range = std::numeric_limits<pixel_type>::max();
+	g_min = std::clamp(g_min, 0, 255);
+	g_max = std::clamp(g_max, 0, 255);
 
-	// Implement the power two-thirds modification logic here
-	Intensity_Data intensity_data(image);
+	const double cbrt_min = std::cbrt(static_cast<double>(g_min));
+	const double cbrt_range = std::cbrt(static_cast<double>(g_max)) - cbrt_min;
 
-	float g_min_to_onethird = pow(g_min, 1.0 / 3.0);
-	float g_max_to_onethird = pow(g_max, 1.0 / 3.0);
-	float one_over_N = 1.0f / (image.width() * image.height());
+	Divided_Data hist_data(image);
 
-	vector<float> factor_lut(range + 1, -1.0f);
+	for (int c = 0; c < channels; ++c) {
+		std::array<unsigned char, 256> lut{};
+		unsigned long long cumulative = 0;
 
-	cimg_forXY(image, x, y) {
-		int sum = 0;
-		int intensity = 0;
-		for (int c = 0; c < image.spectrum(); c++) {
-			intensity += image(x, y, 0, c);
+		for (int f = 0; f < 256; ++f) {
+			cumulative += hist_data.spectrum_occurences[f][c];
+			double cdf = static_cast<double>(cumulative) / N;
+			double root_val = cbrt_min + cbrt_range * cdf;
+			double g = root_val * root_val * root_val;
+			lut[f] = static_cast<unsigned char>(std::clamp(static_cast<int>(std::round(g)), 0, 255));
 		}
-		intensity /= clamp(image.spectrum(), 0, 255);
-		if (factor_lut[intensity] < 0) {
-			for (int m = 0; m < intensity; m++) {
-				sum += intensity_data.occurences[m];
-			}
-			float factor = pow((g_min_to_onethird + (g_max_to_onethird - g_min_to_onethird) * sum * one_over_N), 3.0f) / intensity;
-			for (int c = 0; c < image.spectrum(); c++) {
-				image(x, y, 0, c) = clamp(static_cast<int>(image(x, y, 0, c) * factor), 0, 255);
-			}
-		}
-		else {
-			for (int c = 0; c < image.spectrum(); c++) {
-				image(x, y, 0, c) = clamp(static_cast<int>(image(x, y, 0, c) * factor_lut[intensity]), 0, 255);
-			}
+
+		cimg_forXY(image, x, y) {
+			image(x, y, 0, c) = lut[image(x, y, 0, c)];
 		}
 	}
 }
