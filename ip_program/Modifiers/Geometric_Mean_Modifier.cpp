@@ -8,9 +8,10 @@ void Geometric_Mean_Modifier::modify_inherited() {
     static const auto log_lut = [] {
         std::array<double, 256> table{};
 
-        for (int i = 1; i < 256; ++i)
+        table[0] = 0.0;
+        for (int i = 1; i < 256; ++i) {
             table[i] = std::log(double(i));
-
+        }
         return table;
         }();
 

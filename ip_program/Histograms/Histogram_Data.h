@@ -44,3 +44,14 @@ public:
 private:
 	void fill_data() override;
 };
+class Luminance_Data : public Histogram_Data {
+public:
+	Luminance_Data(CImg<unsigned char>& _image) : Histogram_Data(_image) {
+		occurences.resize(max_value + 1);
+		fill_data();
+	}
+	CImg<unsigned char> makeGraph(int width, int height, bool darkMode) override;
+	vector<unsigned int> occurences;
+private:
+	void fill_data() override;
+};

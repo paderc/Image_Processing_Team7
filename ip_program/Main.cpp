@@ -31,6 +31,9 @@ void print_help() {
 	for (const Comparator_Info& cmd : ALL_COMPARATORS) {
 		cout << cmd.name << "  -  " << cmd.description << endl;
 	}
+	for (const Measurer_Info& cmd : ALL_MEASURERS) {
+		cout << cmd.name << "  -  " << cmd.description << endl;
+	}
 	cout << Green << "---" << Reset << endl;
 }
 void handle_args(int argc, char* argv[]) {
