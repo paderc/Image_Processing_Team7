@@ -151,9 +151,9 @@ inline constexpr Modifier_Info Noise_Maker_Modifier_Info{
     &make_modifier<Noise_Maker>
 };
 inline constexpr Modifier_Info Enlargement_Info{
-    2,
+    3,
     "--enlarge",
-    "[filename] [factor >= 1]",
+    "[filename] [factor >= 1] [Use lerp (T/F)]",
     "Enlarges the image using nearest-neighbor sampling",
     &make_modifier<Enlargement_Modifier>
 };

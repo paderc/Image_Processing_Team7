@@ -64,6 +64,31 @@ void Intensity_Data::fill_data() {
 		}
 	}
 }
+void Luminance_Data::fill_data() {
+	//reset to zero
+	for (auto& val : occurences) {
+		val = 0;
+	}
+	constexpr float R_WEIGHT = 0.2126f;
+	constexpr float G_WEIGHT = 0.7152f;
+	constexpr float B_WEIGHT = 0.0722f;
+
+	for (int y = 0; y < image.height(); y++) {
+		for (int x = 0; x < image.width(); x++) {
+			float lum = 0;
+			for (int k = 0; k < image.spectrum(); k++) {
+				lum += image.atXYZC(x, y, 0, k);
+				if (image.spectrum() == 3) {
+					if (k == 0) lum *= R_WEIGHT;
+					else if (k == 1) lum *= G_WEIGHT;
+					else if (k == 2) lum *= B_WEIGHT;
+				}
+			}
+			unsigned char luminance = static_cast<unsigned char>(lum);
+			occurences.at(luminance)++;
+		}
+	}
+}
 
 CImg<unsigned char> Intensity_Data::makeGraph(int width, int height, bool darkMode) {
 	if (width < 1024) width = 1024;
@@ -105,6 +130,38 @@ CImg<unsigned char> Intensity_Data::makeGraph(int width, int height, bool darkMo
 		if (h > plot_y) h = plot_y;
 		chart.draw_rectangle<unsigned char>(start_x, bottom - h, end_x - 1, bottom - 1, DATA_COLOR, 1.0f);
 	}
+	return chart;
+}
+CImg<unsigned char> Luminance_Data::makeGraph(int width, int height, bool darkMode) {
+	const unsigned char* THEME_COLOR = darkMode ? WHITE : BLACK;
+	const unsigned char* DATA_COLOR = darkMode ? BLACK : WHITE;
+
+	CImg<unsigned char> chart(width, height, 1, 3);
+	chart.fill(THEME_COLOR[0], THEME_COLOR[1], THEME_COLOR[2]);
+
+	const int top = height / 10;
+	const int left = width / 10;
+	const int right = width - left;
+	const int bottom = height - top;
+
+	const int plot_x = right - left;
+	const int plot_y = bottom - top - ARROW_OFFSET;
+
+	chart.draw_arrow<unsigned char>(left, bottom, left, top, DATA_COLOR);
+	chart.draw_line<unsigned char>(left, bottom, right, bottom, DATA_COLOR);
+
+	float size = occurences.size();
+	float values_per_pixel = plot_y / size;
+	if (values_per_pixel < 1) values_per_pixel = 1;
+
+	float bar_length = plot_x / size;
+
+	for (int i = 0; i < size; i++) {
+		const int start_x = left + i * bar_length;
+		chart.draw_rectangle<unsigned char>(start_x, bottom - (values_per_pixel * occurences.at(i)), start_x + bar_length, bottom, DATA_COLOR, 1.0);
+	}
+	chart.save("histogram.bmp");
+
 	return chart;
 }
 
