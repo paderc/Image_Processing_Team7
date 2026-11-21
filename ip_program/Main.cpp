@@ -1,5 +1,7 @@
+#include <exception>
 #include <iostream>
 #include <string_view>
+#include <vector>
 
 #include "Info.h"
 #include "Histograms/Histogram.h"
@@ -39,30 +41,31 @@ void print_help() {
 }
 
 void handle_args(int argc, char* argv[]) {
-	unsigned short base_amt = 2;
+	constexpr int base_amt = 2;
 	if (argc > 1) {
 		string_view command(argv[1]);
 
 		bool timer = false;
 		bool verbose = false;
-		int flag_count = 0;
+		vector<char*> positional(argv, argv + base_amt);
 
 		for (int i = base_amt; i < argc; i++) {
 			string_view s(argv[i]);
 			if (s == "--timer" || s == "-t") {
 				timer = true;
-				flag_count++;
 			}
 			else if (s == "--verbose" || s == "-v") {
 				verbose = true;
-				flag_count++;
+			}
+			else {
+				positional.push_back(argv[i]);
 			}
 		}
+		const int positional_count = static_cast<int>(positional.size()) - base_amt;
 
 		if (command == "--histogram") {
-			int positional_args = argc - base_amt - flag_count;
-			if (positional_args >= 1 && positional_args <= 3) {
-				Histogram hist(argv, argc);
+			if (positional_count >= 1 && positional_count <= 3) {
+				Histogram hist(positional.data(), positional_count + base_amt);
 				hist.make(timer, verbose);
 				return;
 			}
@@ -74,8 +77,8 @@ void handle_args(int argc, char* argv[]) {
 
 		for (const Modifier_Info& cmd : ALL_MODIFIERS) {
 			if (command == cmd.name) {
-				if (argc == base_amt + cmd.required_commands + flag_count) {
-					auto modifier = cmd.factory(argv);
+				if (positional_count == cmd.required_commands) {
+					auto modifier = cmd.factory(positional.data());
 
 					modifier->init();
 
@@ -92,8 +95,8 @@ void handle_args(int argc, char* argv[]) {
 		}
 		for (const Comparator_Info& cmd : ALL_COMPARATORS) {
 			if (command == cmd.name) {
-				if (argc == base_amt + cmd.required_commands + flag_count) {
-					auto comparator = cmd.factory(argv);
+				if (positional_count == cmd.required_commands) {
+					auto comparator = cmd.factory(positional.data());
 
 					comparator->compare(timer, verbose);
 					return;
@@ -106,8 +109,8 @@ void handle_args(int argc, char* argv[]) {
 		}
 		for (const Measurer_Info& cmd : ALL_MEASURERS) {
 			if (command == cmd.name) {
-				if (argc == base_amt + cmd.required_commands + flag_count) {
-					auto measurer = cmd.factory(argv);
+				if (positional_count == cmd.required_commands) {
+					auto measurer = cmd.factory(positional.data());
 
 					measurer->measure(timer, verbose);
 					return;
@@ -128,6 +131,12 @@ void handle_args(int argc, char* argv[]) {
 }
 
 int main(int argc, char* argv[]) {
-	handle_args(argc, argv);
+	try {
+		handle_args(argc, argv);
+	}
+	catch (const std::exception& error) {
+		std::cerr << "Error: " << error.what() << '\n';
+		return 1;
+	}
 	return 0;
 }

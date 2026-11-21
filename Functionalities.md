@@ -1,12 +1,12 @@
-~~(H4) Power 2/3 final probability density function (--hpower).~~
+# Group 7 Task 2
 
-~~(C1) Mean (--cmean). Variance (--cvariance).~~(
-~~(C2) Standard deviation (--cstdev). Variation coefficient I (--cvarcoi).~~
-~~(C3) Asymmetry coefficient (--casyco).~~
-(C4) Flattening coefficient (--cflaco).
-(C5) Variation coefficient II (--cvarcoii).
-(C6) Information source entropy (--centropy).
-
-(S5) Extraction of details III. Without direcition, laplacian filter (--slaplace).
-
-(O2) Roberts operator (--orobertsii).
+- Histogram export `--histogram` saves the selected channel, all channels, or average intensity.
+- H4 `--hpower` applies the power 2/3 histogram transformation.
+- C1 `--cmean` and `--cvariance` calculate mean and variance.
+- C2 `--cstdev` and `--cvarcoi` calculate standard deviation and variation coefficient I.
+- C3 `--casyco` calculates the asymmetry coefficient.
+- C4 `--cflaco` calculates the flattening coefficient (excess kurtosis).
+- C5 `--cvarcoii` calculates variation coefficient II.
+- C6 `--centropy` calculates information source entropy.
+- S3 `--sexdeti` extracts details with the N, NE, E, and SE masks. The N mask also has an optimized implementation.
+- O2 `--orobertsii` applies the Roberts II edge operator.

@@ -4,21 +4,24 @@
 #include <iostream>
 
 using namespace std;
-double Measurer::variance(Intensity_Data data) {
+double Measurer::variance(const Intensity_Data& data) {
 	double variance = 0.0;
-	double mean = this->mean(data);
-	for (int i = 0; i < data.occurences.size(); i++) {
-		variance += (i - mean) * (i - mean) * data.occurences.at(i);
+	const double average = mean(data);
+	for (size_t i = 0; i < data.occurences.size(); ++i) {
+		const double centered = static_cast<double>(i) - average;
+		variance += centered * centered * data.occurences[i];
 	}
-	return variance / (image.width() * image.height());
+	const double pixels = static_cast<double>(width) * height;
+	return pixels > 0 ? variance / pixels : 0.0;
 }
-double Measurer::mean(Intensity_Data data) {
-	double score = 0.0;
+double Measurer::mean(const Intensity_Data& data) {
+	double sum = 0.0;
 
-	for (int i = 0; i < data.occurences.size(); i++) {
-		score += i * data.occurences.at(i);
+	for (size_t i = 0; i < data.occurences.size(); ++i) {
+		sum += static_cast<double>(i) * data.occurences[i];
 	}
-	return score / (image.width() * image.height());
+	const double pixels = static_cast<double>(width) * height;
+	return pixels > 0 ? sum / pixels : 0.0;
 }
 
 string Measurer::describe() {

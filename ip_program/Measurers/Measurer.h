@@ -15,8 +15,8 @@ protected:
 	virtual string describe();
 	int width;
 	int height;
-	double mean(Intensity_Data data);
-	double variance(Intensity_Data data);
+	double mean(const Intensity_Data& data);
+	double variance(const Intensity_Data& data);
 	CImg<unsigned char> image;
 public:
 	Measurer(char* argv[]) : image(), filename(argv[2]) {

@@ -1,7 +1,10 @@
 #include "Extraction_Details_I.h"
 #include <algorithm>
+#include <cmath>
 #include <cstring>
 #include <iostream>
+#include <limits>
+#include <stdexcept>
 #include <vector>
 
 void Extraction_Details_I::modify_inherited() {
@@ -12,67 +15,81 @@ void Extraction_Details_I::modify_inherited() {
 		}
 		std::cerr << "Warning: Optimized mode is specialized for mask N; falling back to universal convolution.\n";
 	}
+	else if (mode != "universal") {
+		throw std::invalid_argument("Choose universal or opt for the S3 filter mode.");
+	}
 
-	std::array<std::array<int, 3>, 3> mask{};
+	CImg<double> mask;
 	if (direction == "N" || direction == "n") {
-		mask = {{ { 1,  1, -1},
-		          { 1, -2, -1},
-		          { 1,  1, -1} }};
+		mask = CImg<double>::matrix( 1,  1,  1,
+		                             1, -2,  1,
+		                            -1, -1, -1);
 	}
 	else if (direction == "NE" || direction == "ne") {
-		mask = {{ { 1, -1, -1},
-		          { 1, -2, -1},
-		          { 1,  1,  1} }};
+		mask = CImg<double>::matrix( 1,  1,  1,
+		                            -1, -2,  1,
+		                            -1, -1,  1);
 	}
 	else if (direction == "E" || direction == "e") {
-		mask = {{ {-1, -1, -1},
-		          { 1, -2,  1},
-		          { 1,  1,  1} }};
+		mask = CImg<double>::matrix(-1,  1,  1,
+		                            -1, -2,  1,
+		                            -1,  1,  1);
 	}
 	else if (direction == "SE" || direction == "se") {
-		mask = {{ {-1, -1,  1},
-		          {-1, -2,  1},
-		          { 1,  1,  1} }};
+		mask = CImg<double>::matrix(-1, -1,  1,
+		                            -1, -2,  1,
+		                             1,  1,  1);
 	}
 	else {
-		std::cerr << "Unknown direction '" << direction << "'. Use N, NE, E, or SE.\n";
-		return;
+		throw std::invalid_argument("Choose N, NE, E, or SE for the S3 filter direction.");
 	}
 
-	applyUniversal(mask);
+	applyUniversal(image, mask);
 }
 
-// 1. Universal 3x3 spatial convolution (works for any 3x3 mask; allocates full output copy)
-void Extraction_Details_I::applyUniversal(const std::array<std::array<int, 3>, 3>& mask) {
+void Extraction_Details_I::applyUniversal(CImg<unsigned char>& image, const CImg<double>& mask) {
+	const int mask_width = mask.width();
+	const int mask_height = mask.height();
+	if (mask_width % 2 == 0 || mask_height % 2 == 0 || mask.depth() != 1 || mask.spectrum() != 1) {
+		throw std::invalid_argument("The filter mask must be a single-channel 2D matrix with odd dimensions.");
+	}
+	double total_weight = 0;
+	for (const double weight : mask) {
+		total_weight += std::abs(weight);
+	}
+	if (!(total_weight <= std::numeric_limits<double>::max() / 256.0)) {
+		throw std::invalid_argument("Filter mask coefficients must be finite and within the calculation range.");
+	}
+
 	const int w = image.width();
 	const int h = image.height();
 	const int channels = image.spectrum();
+	if (w < mask_width || h < mask_height) return;
 
-	CImg<unsigned char> result(image); // Preserves border pixels: g(p, q) = x(p, q)
+	const int radius_x = mask_width / 2;
+	const int radius_y = mask_height / 2;
+	CImg<unsigned char> result(image);
 
 	for (int c = 0; c < channels; ++c) {
-		for (int y = 1; y < h - 1; ++y) {
-			for (int x = 1; x < w - 1; ++x) {
-				int acc = 0;
-				for (int i = -1; i <= 1; ++i) {
-					for (int j = -1; j <= 1; ++j) {
-						acc += mask[i + 1][j + 1] * static_cast<int>(image(x + j, y + i, 0, c));
+		for (int y = radius_y; y < h - radius_y; ++y) {
+			for (int x = radius_x; x < w - radius_x; ++x) {
+				double sum = 0;
+				const double* weight = mask.data();
+				for (int dy = -radius_y; dy <= radius_y; ++dy) {
+					const unsigned char* row = image.data(x - radius_x, y + dy, 0, c);
+					for (int dx = 0; dx < mask_width; ++dx) {
+						sum += *weight++ * row[dx];
 					}
 				}
-				result(x, y, 0, c) = static_cast<unsigned char>(std::clamp(acc, 0, 255));
+				result(x, y, 0, c) = static_cast<unsigned char>(std::clamp(sum, 0.0, 255.0) + 0.5);
 			}
 		}
 	}
 	image = std::move(result);
 }
 
-// 2. Optimized in-place convolution for S3 North mask:
-//    [ 1,  1, -1 ]
-//    [ 1, -2, -1 ]
-//    [ 1,  1, -1 ]
-//    - 0 multiplications (uses bit-shift << 1 for 2*center)
-//    - 5 add/sub ops per pixel via sliding 3-pixel vertical column sums
-//    - 2 * W bytes auxiliary memory (2-row ring buffer instead of W * H * C)
+// The north mask uses three top-minus-bottom differences and the middle row.
+// Reuse two differences across adjacent outputs and keep two original rows.
 void Extraction_Details_I::applyOptimizedNorth() {
 	const int w = image.width();
 	const int h = image.height();
@@ -90,21 +107,21 @@ void Extraction_Details_I::applyOptimizedNorth() {
 		for (int y = 1; y < h - 1; ++y) {
 			const unsigned char* r_top = row_prev.data();
 			const unsigned char* r_mid = row_curr.data();
-			const unsigned char* r_bot = plane + (y + 1) * w;
-			unsigned char* r_out = plane + y * w;
+			const unsigned char* r_bot = plane + static_cast<size_t>(y + 1) * w;
+			unsigned char* r_out = plane + static_cast<size_t>(y) * w;
 
-			int col_left = r_top[0] + r_mid[0] + r_bot[0];
-			int col_mid  = r_top[1] + r_mid[1] + r_bot[1];
+			int diff_left = r_top[0] - r_bot[0];
+			int diff_mid = r_top[1] - r_bot[1];
 
 			for (int x = 1; x < w - 1; ++x) {
-				int col_right = r_top[x + 1] + r_mid[x + 1] + r_bot[x + 1]; // 2 additions
-				int center = r_mid[x];
+				const int diff_right = r_top[x + 1] - r_bot[x + 1];
+				const int center = r_mid[x];
+				const int val = diff_left + diff_mid + diff_right
+					+ r_mid[x - 1] + r_mid[x + 1] - (center << 1);
+				r_out[x] = static_cast<unsigned char>(std::clamp(val, 0, 255));
 
-				int val = col_left + (col_mid - center) - (center << 1) - col_right; // 3 add/sub + 1 shift
-				r_out[x] = static_cast<unsigned char>(val < 0 ? 0 : (val > 255 ? 255 : val));
-
-				col_left = col_mid;
-				col_mid = col_right;
+				diff_left = diff_mid;
+				diff_mid = diff_right;
 			}
 
 			if (y + 1 < h - 1) {

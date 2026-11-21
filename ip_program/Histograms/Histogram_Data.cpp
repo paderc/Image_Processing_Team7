@@ -105,8 +105,6 @@ CImg<unsigned char> Intensity_Data::makeGraph(int width, int height, bool darkMo
 		if (h > plot_y) h = plot_y;
 		chart.draw_rectangle<unsigned char>(start_x, bottom - h, end_x - 1, bottom - 1, DATA_COLOR, 1.0f);
 	}
-	chart.save("histogram.bmp");
-
 	return chart;
 }
 
@@ -196,8 +194,6 @@ CImg<unsigned char> Divided_Data::makeGraph(int width, int height, bool darkMode
 			chart.draw_text(lx + 16, ly, names[k], DATA_COLOR, 0, 1.0f, 16);
 		}
 	}
-
-	chart.save("histogram.bmp");
 
 	return chart;
 }
